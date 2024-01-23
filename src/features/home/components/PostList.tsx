@@ -1,14 +1,14 @@
 import { Post } from '~/features/posts/components'
 import { trpc } from '~/utils/trpc'
-import { EmptyPostList } from './EmptyPostList'
 import { Stack, StackDivider } from '@chakra-ui/react'
 import { APP_GRID_COLUMN } from '~/constants/layouts'
+import { EmptyNoteList } from './EmptyNoteList'
 
 export const PostList = (): JSX.Element => {
   const [data] = trpc.post.list.useSuspenseQuery({})
 
   if (data.items.length === 0) {
-    return <EmptyPostList />
+    return <EmptyNoteList />
   }
   return (
     <Stack

@@ -34,6 +34,6 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs"
-  ],
+, "src/features/notes/components/CreateNote"  ],
   "exclude": ["node_modules"]
 }

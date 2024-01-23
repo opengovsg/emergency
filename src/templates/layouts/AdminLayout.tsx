@@ -9,18 +9,9 @@ export const AdminLayout: GetLayout = (page) => {
   return (
     <EnforceLoginStatePageWrapper>
       <Flex minH="$100vh" flexDir="column" bg="base.canvas.alt" pos="relative">
-        <Grid
-          flex={1}
-          width="100vw"
-          gridColumnGap={{ base: 0, md: '1rem' }}
-          gridTemplate={APP_GRID_TEMPLATE_AREA}
-        >
-          <AppNavbar />
-          <DashSidebar />
-          <Flex flex={1} bg="base.canvas.alt">
-            {page}
-          </Flex>
-        </Grid>
+        <Flex flex={1} bg="base.canvas.alt">
+          {page}
+        </Flex>
       </Flex>
     </EnforceLoginStatePageWrapper>
   )

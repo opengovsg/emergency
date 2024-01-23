@@ -1,7 +1,7 @@
 import { Button } from '@opengovsg/design-system-react'
 import { useRouter } from 'next/router'
 import { trpc } from '~/utils/trpc'
-import { Box, Divider, Flex, HStack, Stack, Text } from '@chakra-ui/react'
+import { Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { SingpassFullLogo } from '~/components/Svg/SingpassFullLogo'
 import { getRedirectUrl } from '~/utils/url'
 
@@ -23,11 +23,6 @@ export const SgidLoginButton = (): JSX.Element | null => {
 
   return (
     <>
-      <HStack spacing="2.5rem">
-        <Divider />
-        <Text textStyle="caption-2">or</Text>
-        <Divider />
-      </HStack>
       <Stack gap="0.75rem">
         <Button
           colorScheme="neutral"
@@ -47,7 +42,6 @@ export const SgidLoginButton = (): JSX.Element | null => {
             <Text> app</Text>
           </Flex>
         </Button>
-        <Text textStyle="caption-2">For whitelisted government users only</Text>
       </Stack>
     </>
   )

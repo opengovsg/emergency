@@ -6,14 +6,12 @@ import {
   APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
-import { NoteHome } from '~/features/home/components/NoteHome'
-import { NoteList } from '~/features/home/components/NoteList'
-import { WelcomeBanner } from '~/features/home/components/WelcomeBanner'
+import { CreateNewNote } from '~/features/notes/components/CreateNote/CreateNewNote'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
 
-const Home: NextPageWithLayout = () => {
+const CreateNote: NextPageWithLayout = () => {
   return (
     <Flex
       w="100%"
@@ -23,14 +21,6 @@ const Home: NextPageWithLayout = () => {
       minH={`calc(100% - ${ADMIN_NAVBAR_HEIGHT})`}
     >
       <AppGrid
-        templateColumns={APP_GRID_TEMPLATE_COLUMN}
-        px={{ base: '1rem', lg: 0 }}
-        bg="white"
-        py="1rem"
-      >
-        <WelcomeBanner />
-      </AppGrid>
-      <AppGrid
         flex={1}
         bg="white"
         pb="2.5rem"
@@ -38,14 +28,12 @@ const Home: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
         alignItems="flex-start"
       >
-        <Suspense fallback={<SkeletonPostList />}>
-          <NoteHome />
-        </Suspense>
+        <CreateNewNote />
       </AppGrid>
     </Flex>
   )
 }
 
-Home.getLayout = AdminLayout
+CreateNote.getLayout = AdminLayout
 
-export default Home
+export default CreateNote

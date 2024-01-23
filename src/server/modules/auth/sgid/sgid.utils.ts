@@ -1,39 +1,19 @@
 import { z } from 'zod'
 import { sgid } from '~/lib/sgid'
-import { safeSchemaJsonParse } from '~/utils/zod'
-
-const pocdexSgidSchema = z.array(
-  z.object({
-    work_email: z.string().email().optional(),
-    agency_name: z.string().optional(),
-    department_name: z.string().optional(),
-    employment_type: z.string().optional(),
-    employment_title: z.string().optional(),
-  }),
-)
+import nric from 'nric'
 
 const expectedUserInfo = z.object({
   sub: z.string(),
   data: z.object({
     'myinfo.name': z.string(),
-    'pocdex.public_officer_details': z.string().transform((value, ctx) => {
-      const result = safeSchemaJsonParse(pocdexSgidSchema, value)
-      if (!result.success) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: result.error.message,
-        })
-        return z.NEVER
-      }
-      return result.data
-    }),
+    'myinfo.nric_number': z.string().refine((val) => nric.validate(val)),
   }),
 })
 export type SgidUserInfo = z.infer<typeof expectedUserInfo>
 
 export const sgidSessionProfileSchema = z.object({
-  list: pocdexSgidSchema,
   name: expectedUserInfo.shape.data.shape['myinfo.name'],
+  nric: expectedUserInfo.shape.data.shape['myinfo.nric_number'],
   sub: expectedUserInfo.shape.sub,
   expiry: z.number(),
 })

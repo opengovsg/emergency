@@ -6,19 +6,12 @@ import { TRPCError } from '@trpc/server'
 import { set } from 'lodash'
 import { z } from 'zod'
 import { env } from '~/env.mjs'
-import { HOME, SIGN_IN, SIGN_IN_SELECT_PROFILE_SUBROUTE } from '~/lib/routes'
+import { HOME } from '~/lib/routes'
 import { APP_SGID_SCOPE, sgid } from '~/lib/sgid'
 import { publicProcedure, router } from '~/server/trpc'
-import { trpcAssert } from '~/utils/trpcAssert'
-import { appendWithRedirect } from '~/utils/url'
-import { normaliseEmail, safeSchemaJsonParse } from '~/utils/zod'
+import { safeSchemaJsonParse } from '~/utils/zod'
 import { upsertSgidAccountAndUser } from './sgid.service'
-import {
-  getUserInfo,
-  sgidSessionProfileSchema,
-  type SgidUserInfo,
-} from './sgid.utils'
-import { SGID } from '~/lib/errors/auth.sgid'
+import { getUserInfo, type SgidUserInfo } from './sgid.utils'
 
 const sgidCallbackStateSchema = z.object({
   landingUrl: z.string(),
@@ -122,66 +115,10 @@ export const sgidRouter = router({
         }
       }
 
-      // Start processing sgid login
-      const pocdexDetails = sgidUserInfo.data['pocdex.public_officer_details']
-      // Handle case where no pocdex details
-      trpcAssert(pocdexDetails.length > 0, {
-        message: SGID.noPocdex,
-        code: 'FORBIDDEN',
-      })
-
-      // More than 1 domain means that the user has multiple profiles
-      // Redirect user to choose a profile before logging in.
-      if (pocdexDetails.length > 1) {
-        const sgidProfileToStore = sgidSessionProfileSchema.safeParse({
-          list: pocdexDetails,
-          sub: sgidUserInfo.sub,
-          name: sgidUserInfo.data['myinfo.name'],
-          // expire profiles after 5 minutes to avoid situations where login-jacking when
-          // the previous user navigated away without selecting a profile
-          expiry: Date.now() + 1000 * 60 * 5, // 5 minutes
-        })
-
-        if (!sgidProfileToStore.success) {
-          ctx.logger.warn(
-            { error: sgidProfileToStore.error },
-            'Unable to store sgid profile in session',
-          )
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Unable to store sgid profile in session',
-          })
-        }
-
-        set(ctx.session, 'sgid.profiles', sgidProfileToStore.data)
-        await ctx.session.save()
-        return {
-          selectProfileStep: true,
-          redirectUrl: appendWithRedirect(
-            `${SIGN_IN}${SIGN_IN_SELECT_PROFILE_SUBROUTE}`,
-            parsedState.data.landingUrl,
-          ),
-        }
-      }
-
-      // Exactly 1 email, create user and tie to account
-      const sgidPocdexEmailResult = normaliseEmail.safeParse(
-        pocdexDetails[0]?.work_email,
-      )
-      if (!sgidPocdexEmailResult.success) {
-        ctx.logger.warn(
-          { error: sgidPocdexEmailResult.error },
-          'Unable to process work email from sgID',
-        )
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Work email was unable to be processed. Please try again.',
-        })
-      }
       const user = await upsertSgidAccountAndUser({
         prisma: ctx.prisma,
         name: sgidUserInfo.data['myinfo.name'],
-        pocdexEmail: sgidPocdexEmailResult.data,
+        nric: sgidUserInfo.data['myinfo.nric_number'],
         sub: sgidUserInfo.sub,
       })
 
@@ -192,71 +129,5 @@ export const sgidRouter = router({
       return {
         redirectUrl: parsedState.data.landingUrl,
       }
-    }),
-  listStoredProfiles: publicProcedure.query(({ ctx }) => {
-    const profiles = ctx.session?.sgid?.profiles
-
-    trpcAssert(profiles, {
-      message: 'Error logging in via sgID: profile is invalid',
-      code: 'BAD_REQUEST',
-      logger: ctx.logger,
-    })
-
-    const hasExpired = profiles.expiry < Date.now()
-    if (hasExpired) {
-      ctx.session?.destroy()
-    }
-
-    trpcAssert(!hasExpired, {
-      message: 'Error logging in via sgID: session has expired',
-      code: 'BAD_REQUEST',
-      logger: ctx.logger,
-    })
-
-    return profiles.list
-  }),
-  selectProfile: publicProcedure
-    .input(
-      z.object({
-        email: normaliseEmail,
-      }),
-    )
-    .mutation(async ({ ctx, input: { email } }) => {
-      trpcAssert(ctx.session, {
-        message: 'Session object missing in context',
-        code: 'UNPROCESSABLE_CONTENT',
-        logger: ctx.logger,
-      })
-
-      const profiles = ctx.session.sgid?.profiles
-      trpcAssert(profiles, {
-        message: 'Error logging in via sgID: profile is invalid',
-        code: 'BAD_REQUEST',
-        logger: ctx.logger,
-      })
-
-      // Clear session once profile is retrieved, everything else is not needed.
-      ctx.session.destroy()
-
-      const hasProfile = profiles.list.some(
-        (profile) => profile.work_email === email,
-      )
-      trpcAssert(hasProfile, {
-        message: 'Error logging in via sgID: selected profile is invalid',
-        code: 'BAD_REQUEST',
-        logger: ctx.logger,
-      })
-
-      // Profile is valid, set on session
-      const user = await upsertSgidAccountAndUser({
-        prisma: ctx.prisma,
-        name: profiles.name,
-        pocdexEmail: email,
-        sub: profiles.sub,
-      })
-
-      ctx.session.userId = user.id
-      await ctx.session.save()
-      return
     }),
 })

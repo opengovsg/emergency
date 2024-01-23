@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 import { FullscreenSpinner } from '~/components/FullscreenSpinner'
 import { useLoginState } from '~/features/auth'
@@ -18,27 +17,23 @@ export const SgidCallback = (): JSX.Element => {
     query: { code, state },
   } = router
 
-  const [{ redirectUrl, selectProfileStep }] =
-    trpc.auth.sgid.callback.useSuspenseQuery(
-      { code: String(code), state: String(state) },
-      { staleTime: Infinity },
-    )
-
-  useEffect(() => {
-    if (!selectProfileStep) {
-      setHasLoginStateFlag()
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      utils.me.get.invalidate()
-    }
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    router.replace(redirectUrl)
-  }, [
-    redirectUrl,
-    router,
-    selectProfileStep,
-    setHasLoginStateFlag,
-    utils.me.get,
-  ])
-
+  trpc.auth.sgid.callback.useSuspenseQuery(
+    {
+      code: String(code),
+      state: String(state),
+    },
+    {
+      retry: 0,
+      onSuccess: ({ redirectUrl }) => {
+        setHasLoginStateFlag()
+        void utils.me.get.invalidate()
+        void router.replace(redirectUrl)
+      },
+      onError: (error) => {
+        console.error(error)
+        void router.replace(`/sign-in?error=${error.message}`)
+      },
+    },
+  )
   return <FullscreenSpinner />
 }

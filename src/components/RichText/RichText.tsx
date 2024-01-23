@@ -75,7 +75,7 @@ const UnmemoedRichText = forwardRef<TextAreaFieldProps, 'div'>(
       value,
       defaultValue,
       onChange,
-      placeholder = 'Add details and give concrete examples to explain how you feel.',
+      placeholder = 'Write your message here ...',
       sx,
       ...flexProps
     },

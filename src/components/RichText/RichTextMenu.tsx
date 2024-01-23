@@ -5,19 +5,12 @@ import { type Editor } from '@tiptap/react'
 import { type IconType } from 'react-icons'
 import {
   BiBold,
-  BiCode,
-  BiCodeBlock,
   BiItalic,
   BiListOl,
   BiListUl,
-  BiRedo,
   BiStrikethrough,
   BiText,
-  BiUndo,
 } from 'react-icons/bi'
-import { VscHorizontalRule } from 'react-icons/vsc'
-import { MdFormatClear } from 'react-icons/md'
-import { TbBlockquote, TbH1, TbH2 } from 'react-icons/tb'
 
 type MenuButton =
   | {
@@ -55,29 +48,7 @@ const MENU_BUTTONS: MenuButton[] = [
   },
 
   { type: 'divider' },
-  {
-    type: 'button',
-    label: 'Paragraph',
-    icon: BiText,
-    onClick: (editor: Editor) => editor.chain().focus().setParagraph().run(),
-    isActive: (editor: Editor) => editor.isActive('paragraph'),
-  },
-  {
-    type: 'button',
-    label: 'Heading 1',
-    icon: TbH1,
-    onClick: (editor: Editor) =>
-      editor.chain().focus().toggleHeading({ level: 1 }).run(),
-    isActive: (editor: Editor) => editor.isActive('heading', { level: 1 }),
-  },
-  {
-    type: 'button',
-    label: 'Heading 2',
-    icon: TbH2,
-    onClick: (editor: Editor) =>
-      editor.chain().focus().toggleHeading({ level: 2 }).run(),
-    isActive: (editor: Editor) => editor.isActive('heading', { level: 2 }),
-  },
+
   {
     type: 'button',
     label: 'Bullet List',
@@ -93,66 +64,6 @@ const MENU_BUTTONS: MenuButton[] = [
     onClick: (editor: Editor) =>
       editor.chain().focus().toggleOrderedList().run(),
     isActive: (editor: Editor) => editor.isActive('orderedList'),
-  },
-  {
-    type: 'divider',
-  },
-  {
-    type: 'button',
-    label: 'Code',
-    icon: BiCode,
-    onClick: (editor: Editor) => editor.chain().focus().toggleCode().run(),
-    isActive: (editor: Editor) => editor.isActive('code'),
-  },
-  {
-    type: 'button',
-    label: 'Code Block',
-    icon: BiCodeBlock,
-    onClick: (editor: Editor) => editor.chain().focus().toggleCodeBlock().run(),
-    isActive: (editor: Editor) => editor.isActive('codeBlock'),
-  },
-
-  {
-    type: 'button',
-    label: 'Blockquote',
-    icon: TbBlockquote,
-    onClick: (editor: Editor) =>
-      editor.chain().focus().toggleBlockquote().run(),
-    isActive: (editor: Editor) => editor.isActive('blockquote'),
-  },
-  {
-    type: 'divider',
-  },
-  {
-    type: 'button',
-    label: 'Horizontal Rule',
-    icon: VscHorizontalRule,
-    onClick: (editor: Editor) =>
-      editor.chain().focus().setHorizontalRule().run(),
-  },
-  // {
-  //   label: 'Hard Break',
-  //   icon: 'text-wrap',
-  //   onClick: (editor: Editor) => editor.chain().focus().setHardBreak().run(),
-  // },
-  {
-    type: 'button',
-    label: 'Clear Format',
-    icon: MdFormatClear,
-    onClick: (editor: Editor) =>
-      editor.chain().focus().clearNodes().unsetAllMarks().run(),
-  },
-  {
-    type: 'button',
-    label: 'Undo',
-    icon: BiUndo,
-    onClick: (editor: Editor) => editor.chain().focus().undo().run(),
-  },
-  {
-    type: 'button',
-    label: 'Redo',
-    icon: BiRedo,
-    onClick: (editor: Editor) => editor.chain().focus().redo().run(),
   },
 ]
 
