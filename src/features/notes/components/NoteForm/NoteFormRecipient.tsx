@@ -1,4 +1,4 @@
-import { Input, Stack, Text } from '@chakra-ui/react'
+import { FormControl, Input, Stack, Text } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
@@ -6,10 +6,12 @@ import { FormErrorMessage } from '@chakra-ui/react'
 interface CreateNewNoteRecipientProps
   extends UseFormReturn<ClientAddNoteSchema> {
   handleNext: () => void
+  handleCancel: () => void
 }
 
-export const CreateNewNoteRecipient = ({
+export const NoteFormRecipient = ({
   handleNext,
+  handleCancel,
   ...props
 }: CreateNewNoteRecipientProps) => {
   const {
@@ -34,23 +36,26 @@ export const CreateNewNoteRecipient = ({
       </Stack>
       <Stack width="19.5rem" alignItems="flex-start" gap="0.5rem">
         <Text textStyle="subhead-1">Message recipient</Text>
-        <Controller
-          name="nric"
-          control={control}
-          render={({ field: { onChange, onBlur, value, ref } }) => (
-            <>
-              <Input
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-                ref={ref}
-              />
-              <FormErrorMessage>
-                {errors.nric && errors.nric.message}
-              </FormErrorMessage>
-            </>
-          )}
-        />
+        <FormControl isRequired isInvalid={!!errors.nric}>
+          <Controller
+            name="nric"
+            control={control}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <>
+                <Input
+                  placeholder="Enter the recipient's NRIC"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  ref={ref}
+                />
+                <FormErrorMessage>
+                  {errors.nric && errors.nric.message}
+                </FormErrorMessage>
+              </>
+            )}
+          />
+        </FormControl>
       </Stack>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
         <Button width="19.5rem" alignItems="flex-start" onClick={handleNext}>
@@ -61,6 +66,7 @@ export const CreateNewNoteRecipient = ({
           colorScheme="neutral"
           variant="clear"
           alignItems="center"
+          onClick={handleCancel}
         >
           Cancel
         </Button>

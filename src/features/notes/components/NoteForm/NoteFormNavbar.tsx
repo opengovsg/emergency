@@ -4,8 +4,8 @@ interface CreateNewNoteNavbarProps {
   step: number
   handleGoBack: () => void
 }
-import { MAX_STEPS } from './CreateNewNote'
-export const CreateNewNoteNavbar = ({
+import { MAX_STEPS } from './NoteForm'
+export const NoteFormNavbar = ({
   step,
   handleGoBack,
 }: CreateNewNoteNavbarProps) => {

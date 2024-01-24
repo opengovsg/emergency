@@ -7,10 +7,12 @@ export const defaultNoteSelect = Prisma.validator<Prisma.NoteSelect>()({
   createdAt: true,
   updatedAt: true,
   authorId: true,
+  trigger: true,
   author: {
     select: {
       nric: true,
       name: true,
+      isDead: true,
     },
   },
   recipient: {

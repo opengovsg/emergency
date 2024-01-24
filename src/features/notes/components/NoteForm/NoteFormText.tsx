@@ -3,15 +3,17 @@ import { RichText } from '~/components/RichText'
 import { Stack, Text, Button } from '@chakra-ui/react'
 import { FormErrorMessage } from '@chakra-ui/react'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
-
-interface CreateNewNoteTextProps extends UseFormReturn<ClientAddNoteSchema> {
+import { FormControl } from '@chakra-ui/react'
+interface NoteFormTextProps extends UseFormReturn<ClientAddNoteSchema> {
   handleNext: () => void
+  handleCancel: () => void
 }
 
-export const CreateNewNoteText = ({
+export const NoteFormText = ({
   handleNext,
+  handleCancel,
   ...props
-}: CreateNewNoteTextProps) => {
+}: NoteFormTextProps) => {
   const {
     control,
     setValue,
@@ -33,21 +35,23 @@ export const CreateNewNoteText = ({
           the messages you want shared in case of an unforeseen event.
         </Text>
       </Stack>
-      <Controller
-        control={control}
-        name="contentHtml"
-        render={({ field: { onChange, ...field } }) => (
-          <RichText
-            width="19.5rem"
-            {...field}
-            onChange={(value, rawValue) => {
-              onChange(value)
-              setValue('content', rawValue ?? '')
-            }}
-          />
-        )}
-      />
-      <FormErrorMessage>{errors.contentHtml?.message}</FormErrorMessage>
+      <FormControl isInvalid={!!errors.contentHtml}>
+        <Controller
+          control={control}
+          name="contentHtml"
+          render={({ field: { onChange, ...field } }) => (
+            <RichText
+              width="19.5rem"
+              {...field}
+              onChange={(value, rawValue) => {
+                onChange(value)
+                setValue('content', rawValue ?? '')
+              }}
+            />
+          )}
+        />
+        <FormErrorMessage>{errors.contentHtml?.message}</FormErrorMessage>
+      </FormControl>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
         <Button width="19.5rem" alignItems="flex-start" onClick={handleNext}>
           Next
@@ -57,6 +61,7 @@ export const CreateNewNoteText = ({
           colorScheme="neutral"
           variant="clear"
           alignItems="center"
+          onClick={handleCancel}
         >
           Cancel
         </Button>

@@ -19,4 +19,17 @@ export const textStyles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
+  noteView: {
+    fontSize: '0.875rem',
+    fontStyle: 'normal',
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    lineHeight: '1.25rem',
+    letterSpacing: '-0.084px',
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 }

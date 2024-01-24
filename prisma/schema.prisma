@@ -44,6 +44,7 @@ model User {
   name          String?
   authoredNotes Note[]  @relation("AuthorRelation")
   receivedNotes Note[]  @relation("RecipientRelation")
+  isDead        Boolean @default(false)
 }
 
 enum Trigger {

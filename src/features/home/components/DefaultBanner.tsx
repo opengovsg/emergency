@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useMe } from '~/features/me/api'
-export const WelcomeBanner = () => {
+export const DefaultBanner = () => {
   const { me } = useMe()
   return (
     <Flex

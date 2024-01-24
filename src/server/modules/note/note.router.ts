@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { protectedProcedure, router } from '~/server/trpc'
 import { defaultNoteSelect, listNotesInputSchema } from './note.select'
 import { addNoteSchema } from '~/schemas/note'
+import { Trigger } from '@prisma/client'
 
 export const noteRouter = router({
   listCreated: protectedProcedure
@@ -20,6 +21,7 @@ export const noteRouter = router({
       const items = await ctx.prisma.note.findMany({
         where: {
           authorId: ctx.user.id,
+          deletedAt: null,
         },
         select: defaultNoteSelect,
         // get an extra item at the end which we'll use as next cursor
@@ -57,6 +59,18 @@ export const noteRouter = router({
       const items = await ctx.prisma.note.findMany({
         where: {
           recipientNric: ctx.user.nric,
+          deletedAt: null,
+          OR: [
+            {
+              trigger: Trigger.DEATH,
+              author: {
+                isDead: true,
+              },
+            },
+            {
+              trigger: Trigger.IMMEDIATE,
+            },
+          ],
         },
         select: defaultNoteSelect,
         // get an extra item at the end which we'll use as next cursor
@@ -97,14 +111,40 @@ export const noteRouter = router({
           message: `No note with id '${id}'`,
         })
       }
-
-      return note
+      if (
+        note.authorId !== ctx.user.id &&
+        note.recipient.nric !== ctx.user.nric
+      ) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'You are not authorised to view this note',
+        })
+      }
+      if (
+        note.recipient.nric === ctx.user.nric &&
+        note.trigger === Trigger.DEATH &&
+        !note.author.isDead
+      ) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'You are not authorised to view this note',
+        })
+      }
+      const editedNote = {
+        nric: note.recipient.nric,
+        trigger: note.trigger,
+        content: note.content,
+        contentHtml: note.contentHtml,
+        id: note.id,
+        isAuthor: ctx.session?.userId === note.authorId,
+      }
+      return editedNote
     }),
   add: protectedProcedure
     .input(addNoteSchema)
-    .mutation(async ({ input: { ...input }, ctx }) => {
-      const note = await ctx.prisma.note.create({
-        data: {
+    .mutation(async ({ input: { nric, ...input }, ctx }) => {
+      const note = await ctx.prisma.note.upsert({
+        create: {
           ...input,
           author: {
             connect: {
@@ -114,15 +154,30 @@ export const noteRouter = router({
           recipient: {
             connectOrCreate: {
               create: {
-                nric: input.nric,
+                nric,
               },
               where: {
-                nric: input.nric,
+                nric,
               },
             },
           },
         },
-        select: defaultNoteSelect,
+        update: {
+          ...input,
+          recipient: {
+            connectOrCreate: {
+              create: {
+                nric,
+              },
+              where: {
+                nric,
+              },
+            },
+          },
+        },
+        where: {
+          id: input.id,
+        },
       })
       return note
     }),

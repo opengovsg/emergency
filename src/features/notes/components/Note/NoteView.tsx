@@ -1,70 +1,129 @@
-import { Avatar, Stack, type StackProps, Text } from '@chakra-ui/react'
-import { Link } from '@opengovsg/design-system-react'
-import NextLink from 'next/link'
-import { useMemo } from 'react'
-import { RichText } from '~/components/RichText'
-import { formatRelativeTime } from '~/lib/dates'
-import { PROFILE } from '~/lib/routes'
-import { type RouterOutput } from '~/utils/trpc'
+import {
+  Stack,
+  Text,
+  Card,
+  Box,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+  useDisclosure,
+  Flex,
+  Icon,
+} from '@chakra-ui/react'
 
+import { type RouterOutput } from '~/utils/trpc'
+import {
+  BiDotsHorizontalRounded,
+  BiPencil,
+  BiTrash,
+  BiTimeFive,
+  BiSend,
+} from 'react-icons/bi'
+import { DeleteNoteModal } from '../DeleteNoteModal'
+import { useRouter } from 'next/router'
+import { Trigger } from '@prisma/client'
 export interface NoteViewProps {
-  post: RouterOutput['post']['byUser']['posts'][number]
-  hideActions?: boolean
-  containerProps?: StackProps
+  note:
+    | RouterOutput['note']['listCreated']['items'][number]
+    | RouterOutput['note']['listReceived']['items'][number]
+  isViewOnly?: boolean
 }
 
 export const NoteView = ({
-  post,
-  hideActions,
-  containerProps,
+  note,
+  isViewOnly = false,
 }: NoteViewProps): JSX.Element => {
-  const relativeDate = useMemo(() => formatRelativeTime(post.createdAt), [post])
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
+  const handleMenuClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+  const handleEditClick = async (event: React.MouseEvent) => {
+    event.stopPropagation()
+    await router.push(`/edit-note/${note.id}`)
+  }
+
+  const handleDeleteClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    onOpen()
+  }
   return (
-    <Stack
-      flexDir="column"
-      spacing="1rem"
-      px={{ base: '1rem', lg: '1.5rem' }}
-      mx={{ base: '-1rem', lg: '-1.5rem' }}
-      {...containerProps}
+    <Card
+      display="flex"
+      px="1rem"
+      py="1.5rem"
+      flexDirection="column"
+      alignItems="flex-start"
+      gap="0.75rem"
+      alignSelf="stretch"
+      onClick={() => router.push(`/note/${note.id}`)}
     >
-      <Stack spacing="1rem" direction="row">
-        <Avatar
-          variant="subtle"
-          bg="base.canvas.brand-subtle"
-          name={post.author?.name ?? undefined}
-          src={post.author.image ?? undefined}
-          size="md"
-        />
-        <Stack spacing={0}>
-          <Text textStyle="subhead-2" color="base.content.strong">
-            {post.author.name}
-          </Text>
-          <Stack direction="row" spacing="1rem">
-            <Link
-              data-value="post-action"
-              variant="standalone"
-              p={0}
-              as={NextLink}
-              href={`${PROFILE}/${post.author.username}`}
-              textStyle="body-2"
-              color="base.content.medium"
-            >
-              @{post.author.username}
-            </Link>
-            <Text
-              title={post.createdAt.toLocaleString()}
-              textStyle="body-2"
-              color="base.content.medium"
-            >
-              {relativeDate}
+      <Box display="flex" width="17.5rem" alignItems="flex-start">
+        <Stack width="16rem" alignItems="flex-start" gap="0.5rem">
+          <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
+            <Text textColor="base.content.brand" textStyle="legal">
+              Message Recipient
             </Text>
+            <Text textStyle="subhead-1">{note.recipient.nric}</Text>
           </Stack>
+          <Text textStyle="noteView">{note.content}</Text>
         </Stack>
-      </Stack>
-      <Stack>
-        <RichText defaultValue={post?.contentHtml} isReadOnly />
-        {/* {!hideActions && <PostActions post={post} />} */}
-      </Stack>
-    </Stack>
+        {!isViewOnly ? (
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              icon={<BiDotsHorizontalRounded color="black" size={24} />}
+              colorScheme="white"
+              aria-label="Options"
+              size="24px"
+              onClick={handleMenuClick}
+            />
+            <MenuList>
+              <MenuItem icon={<BiPencil />} onClick={handleEditClick}>
+                Edit
+              </MenuItem>
+              <MenuItem
+                icon={<BiTrash />}
+                color="utility.feedback.critical"
+                onClick={handleDeleteClick}
+              >
+                Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        ) : null}
+      </Box>
+      <Flex
+        py="0.25rem"
+        px="0.5rem"
+        alignItems="center"
+        gap="0.25rem"
+        borderRadius="0.25rem"
+        bgColor={
+          note.trigger === Trigger.DEATH
+            ? 'interaction.main-subtle.default'
+            : 'interaction.sub-subtle.default'
+        }
+      >
+        <Icon
+          as={note.trigger === Trigger.DEATH ? BiTimeFive : BiSend}
+          width="0.75rem"
+          height="0.75rem"
+        />
+        <Text
+          textStyle="legal"
+          textColor={
+            note.trigger === Trigger.DEATH
+              ? 'interaction.main.default'
+              : 'interaction.sub.default'
+          }
+        >
+          {note.trigger === Trigger.DEATH ? 'Upon passing' : 'Immediate'}
+        </Text>
+      </Flex>
+      <DeleteNoteModal isOpen={isOpen} onClose={onClose} id={note.id} />
+    </Card>
   )
 }

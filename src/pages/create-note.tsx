@@ -1,12 +1,10 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { SkeletonPostList } from '~/components/SkeletonPostList'
-import Suspense from '~/components/Suspense'
 import {
   ADMIN_NAVBAR_HEIGHT,
-  APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
-import { CreateNewNote } from '~/features/notes/components/CreateNote/CreateNewNote'
+import { NoteForm } from '~/features/notes/components/NoteForm/NoteForm'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
@@ -28,7 +26,7 @@ const CreateNote: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
         alignItems="flex-start"
       >
-        <CreateNewNote />
+        <NoteForm />
       </AppGrid>
     </Flex>
   )
