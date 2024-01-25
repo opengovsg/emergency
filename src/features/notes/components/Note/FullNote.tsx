@@ -5,14 +5,14 @@ interface FullNoteProps {
   nric: string
   trigger: Trigger
   contentHtml: string
-  isRecipient?: boolean
+  isAuthor?: boolean
 }
 
 export const FullNote = ({
   nric,
   trigger,
   contentHtml,
-  isRecipient = true,
+  isAuthor = true,
 }: FullNoteProps) => {
   return (
     <Flex
@@ -34,7 +34,7 @@ export const FullNote = ({
         <Flex justifyContent="space-between" alignItems="flex-end" width="full">
           <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
             <Text textColor="base.content.brand" textStyle="legal">
-              {isRecipient ? 'Message Recipient' : 'Message Sender'}
+              {isAuthor ? 'Message Recipient' : 'Message Sender'}
             </Text>
             <Text textStyle="subhead-1">{nric}</Text>
           </Stack>

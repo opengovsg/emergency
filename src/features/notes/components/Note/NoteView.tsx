@@ -29,13 +29,11 @@ export interface NoteViewProps {
     | RouterOutput['note']['listCreated']['items'][number]
     | RouterOutput['note']['listReceived']['items'][number]
   isViewOnly?: boolean
-  isRecipient?: boolean
 }
 
 export const NoteView = ({
   note,
   isViewOnly = false,
-  isRecipient = false,
 }: NoteViewProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
@@ -61,14 +59,17 @@ export const NoteView = ({
       gap="0.75rem"
       alignSelf="stretch"
       onClick={() => router.push(`/note/${note.id}`)}
+      cursor="pointer"
     >
       <Box display="flex" width="full" alignItems="flex-start">
         <Stack width="full" alignItems="flex-start" gap="0.5rem">
           <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
             <Text textColor="base.content.brand" textStyle="legal">
-              {isRecipient ? 'Message Recipient' : 'Message Sender'}
+              {isViewOnly ? 'Message Sender' : 'Message Recipient'}
             </Text>
-            <Text textStyle="subhead-1">{note.author.nric}</Text>
+            <Text textStyle="subhead-1">
+              {isViewOnly ? note.author.nric : note.recipient.nric}
+            </Text>
           </Stack>
           <Text textStyle="noteView">{note.content}</Text>
         </Stack>

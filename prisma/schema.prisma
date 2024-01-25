@@ -24,7 +24,7 @@ model Note {
   contentHtml   String    @map("content_html") @db.Text
   authorId      String    @map("author_id")
   author        User      @relation("AuthorRelation", fields: [authorId], references: [id], onDelete: Cascade)
-  recipientNric String    @map("recipient_id")
+  recipientNric String    @map("recipient_nric")
   recipient     User      @relation("RecipientRelation", fields: [recipientNric], references: [nric], onDelete: Cascade)
   // To return `Date`s intact through the API we use transformers
   // https://trpc.io/docs/data-transformers
@@ -45,6 +45,10 @@ model User {
   authoredNotes Note[]  @relation("AuthorRelation")
   receivedNotes Note[]  @relation("RecipientRelation")
   isDead        Boolean @default(false)
+
+  parentNric String? @map("parent_nric")
+  parent     User?   @relation("UserChildren", fields: [parentNric], references: [nric])
+  children   User[]  @relation("UserChildren")
 }
 
 enum Trigger {

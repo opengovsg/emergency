@@ -6,15 +6,19 @@ export const upsertSgidAccountAndUser = async ({
   prisma,
   name,
   nric,
+  sponsoredChildren,
+  children,
 }: {
   prisma: PrismaClient
   name: SgidSessionProfile['name']
   nric: SgidSessionProfile['nric']
   sub: SgidSessionProfile['sub']
+  sponsoredChildren: SgidSessionProfile['sponsoredChildren']
+  children: SgidSessionProfile['children']
 }) => {
   return await prisma.$transaction(async (tx) => {
     // Create user from email
-    const user = await tx.user.upsert({
+    const parentUser = await tx.user.upsert({
       where: {
         nric,
       },
@@ -27,6 +31,30 @@ export const upsertSgidAccountAndUser = async ({
       },
     })
 
-    return user
+    await Promise.all(
+      sponsoredChildren.map(async (child) => {
+        await tx.user.upsert({
+          where: { nric: child.nric },
+          update: { name: child.name, parentNric: nric },
+          create: { name: child.name, nric: child.nric, parentNric: nric },
+        })
+      }),
+    )
+
+    await Promise.all(
+      children.map(async (child) => {
+        await tx.user.upsert({
+          where: { nric: child.birth_cert_no },
+          update: { name: child.name, parentNric: nric },
+          create: {
+            name: child.name,
+            nric: child.birth_cert_no,
+            parentNric: nric,
+          },
+        })
+      }),
+    )
+
+    return parentUser
   })
 }

@@ -9,4 +9,5 @@ export const defaultMeSelect = Prisma.validator<Prisma.UserSelect>()({
   id: true,
   name: true,
   nric: true,
+  children: true,
 })
