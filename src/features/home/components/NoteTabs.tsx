@@ -7,9 +7,9 @@ interface NoteTabsProps {
 
 export const NoteTabs = ({ tabNumber, setTabNumber }: NoteTabsProps) => {
   return (
-    <Flex alignItems="flex-start">
+    <Flex alignItems="flex-start" width="full">
       <Flex
-        width="9.75rem"
+        width="full"
         py="0.5rem"
         px="1rem"
         justifyContent="center"
@@ -39,7 +39,7 @@ export const NoteTabs = ({ tabNumber, setTabNumber }: NoteTabsProps) => {
         </Text>
       </Flex>
       <Flex
-        width="9.75rem"
+        width="full"
         py="0.5rem"
         px="1rem"
         justifyContent="center"

@@ -1,9 +1,9 @@
+import { Trigger } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { addNoteSchema } from '~/schemas/note'
 import { protectedProcedure, router } from '~/server/trpc'
 import { defaultNoteSelect, listNotesInputSchema } from './note.select'
-import { addNoteSchema } from '~/schemas/note'
-import { Trigger } from '@prisma/client'
 
 export const noteRouter = router({
   listCreated: protectedProcedure
@@ -122,6 +122,7 @@ export const noteRouter = router({
       }
       if (
         note.recipient.nric === ctx.user.nric &&
+        note.authorId !== ctx.user.id &&
         note.trigger === Trigger.DEATH &&
         !note.author.isDead
       ) {
@@ -131,7 +132,8 @@ export const noteRouter = router({
         })
       }
       const editedNote = {
-        nric: note.recipient.nric,
+        recipientNric: note.recipient.nric,
+        authorNric: note.author.nric,
         trigger: note.trigger,
         content: note.content,
         contentHtml: note.contentHtml,
@@ -143,42 +145,46 @@ export const noteRouter = router({
   add: protectedProcedure
     .input(addNoteSchema)
     .mutation(async ({ input: { nric, ...input }, ctx }) => {
-      const note = await ctx.prisma.note.upsert({
-        create: {
-          ...input,
-          author: {
-            connect: {
-              id: ctx.user.id,
-            },
-          },
-          recipient: {
-            connectOrCreate: {
-              create: {
-                nric,
-              },
-              where: {
-                nric,
+      let note
+      if (input.id) {
+        // Perform upsert if id is defined
+        note = await ctx.prisma.note.upsert({
+          where: { id: input.id },
+          update: {
+            ...input,
+            recipient: {
+              connectOrCreate: {
+                create: { nric },
+                where: { nric },
               },
             },
           },
-        },
-        update: {
-          ...input,
-          recipient: {
-            connectOrCreate: {
-              create: {
-                nric,
-              },
-              where: {
-                nric,
+          create: {
+            ...input,
+            author: { connect: { id: ctx.user.id } },
+            recipient: {
+              connectOrCreate: {
+                create: { nric },
+                where: { nric },
               },
             },
           },
-        },
-        where: {
-          id: input.id,
-        },
-      })
+        })
+      } else {
+        // Perform create if id is undefined
+        note = await ctx.prisma.note.create({
+          data: {
+            ...input,
+            author: { connect: { id: ctx.user.id } },
+            recipient: {
+              connectOrCreate: {
+                create: { nric },
+                where: { nric },
+              },
+            },
+          },
+        })
+      }
       return note
     }),
   delete: protectedProcedure

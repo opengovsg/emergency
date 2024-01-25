@@ -10,7 +10,7 @@ export const NoteReceived = () => {
     return <EmptyNoteReceived />
   }
   return (
-    <Stack w="19.5rem" alignItems="flex-start" gap="1rem">
+    <Stack w="full" alignItems="flex-start" gap="1rem">
       <Stack alignItems="flex-start" gap="0.5rem" alignSelf="stretch">
         <Text textStyle="caption-2">View notes that {"you've"} received</Text>
         <Divider />

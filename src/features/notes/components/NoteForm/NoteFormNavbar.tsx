@@ -11,7 +11,7 @@ export const NoteFormNavbar = ({
 }: CreateNewNoteNavbarProps) => {
   return (
     <Flex py="2rem" flexDirection="column" alignItems="flex-start" gap="0.5rem">
-      <Flex width="22.5rem" pr="2rem" alignItems="center">
+      <Flex width="full" pr="2rem" alignItems="center">
         <Flex alignItems="center" py="0.5rem" px="1rem" justifyContent="center">
           <Icon
             as={BiArrowBack}
@@ -21,11 +21,16 @@ export const NoteFormNavbar = ({
             onClick={handleGoBack}
           />
         </Flex>
-        <Flex justifyContent="space-between" alignItems="center" flex="1 0 0">
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flex="1 0 0"
+          gap="1rem"
+        >
           <Progress
             value={(step / MAX_STEPS) * 100}
             colorScheme="blue"
-            width="15rem"
+            width="full"
             height="0.25rem"
           />
           <Text textStyle="legal">

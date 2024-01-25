@@ -33,7 +33,7 @@ export const NoteFormTrigger = ({
       gap="2rem"
       alignSelf="stretch"
     >
-      <Stack width="19.5rem" alignItems="flex-start" gap="1rem">
+      <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">When do you want to send your note?</Text>
         <Text textStyle="body-2">
           Please select the moment your message will reach your emergency
@@ -69,11 +69,11 @@ export const NoteFormTrigger = ({
         </FormControl>
       </Stack>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="19.5rem" alignItems="flex-start" onClick={handleNext}>
+        <Button width="full" alignItems="flex-start" onClick={handleNext}>
           Next
         </Button>
         <Button
-          width="19.5rem"
+          width="full"
           colorScheme="neutral"
           variant="clear"
           alignItems="center"

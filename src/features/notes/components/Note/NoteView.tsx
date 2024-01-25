@@ -1,39 +1,41 @@
 import {
-  Stack,
-  Text,
-  Card,
   Box,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  IconButton,
-  useDisclosure,
+  Card,
   Flex,
   Icon,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+  useDisclosure,
 } from '@chakra-ui/react'
 
-import { type RouterOutput } from '~/utils/trpc'
+import { Trigger } from '@prisma/client'
+import { useRouter } from 'next/router'
 import {
   BiDotsHorizontalRounded,
   BiPencil,
-  BiTrash,
-  BiTimeFive,
   BiSend,
+  BiTimeFive,
+  BiTrash,
 } from 'react-icons/bi'
+import { type RouterOutput } from '~/utils/trpc'
 import { DeleteNoteModal } from '../DeleteNoteModal'
-import { useRouter } from 'next/router'
-import { Trigger } from '@prisma/client'
 export interface NoteViewProps {
   note:
     | RouterOutput['note']['listCreated']['items'][number]
     | RouterOutput['note']['listReceived']['items'][number]
   isViewOnly?: boolean
+  isRecipient?: boolean
 }
 
 export const NoteView = ({
   note,
   isViewOnly = false,
+  isRecipient = false,
 }: NoteViewProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
@@ -60,13 +62,13 @@ export const NoteView = ({
       alignSelf="stretch"
       onClick={() => router.push(`/note/${note.id}`)}
     >
-      <Box display="flex" width="17.5rem" alignItems="flex-start">
-        <Stack width="16rem" alignItems="flex-start" gap="0.5rem">
+      <Box display="flex" width="full" alignItems="flex-start">
+        <Stack width="full" alignItems="flex-start" gap="0.5rem">
           <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
             <Text textColor="base.content.brand" textStyle="legal">
-              Message Recipient
+              {isRecipient ? 'Message Recipient' : 'Message Sender'}
             </Text>
-            <Text textStyle="subhead-1">{note.recipient.nric}</Text>
+            <Text textStyle="subhead-1">{note.author.nric}</Text>
           </Stack>
           <Text textStyle="noteView">{note.content}</Text>
         </Stack>
@@ -95,34 +97,37 @@ export const NoteView = ({
           </Menu>
         ) : null}
       </Box>
-      <Flex
-        py="0.25rem"
-        px="0.5rem"
-        alignItems="center"
-        gap="0.25rem"
-        borderRadius="0.25rem"
-        bgColor={
-          note.trigger === Trigger.DEATH
-            ? 'interaction.main-subtle.default'
-            : 'interaction.sub-subtle.default'
-        }
-      >
-        <Icon
-          as={note.trigger === Trigger.DEATH ? BiTimeFive : BiSend}
-          width="0.75rem"
-          height="0.75rem"
-        />
-        <Text
-          textStyle="legal"
-          textColor={
+      {!isViewOnly ? (
+        <Flex
+          py="0.25rem"
+          px="0.5rem"
+          alignItems="center"
+          gap="0.25rem"
+          borderRadius="0.25rem"
+          bgColor={
             note.trigger === Trigger.DEATH
-              ? 'interaction.main.default'
-              : 'interaction.sub.default'
+              ? 'interaction.main-subtle.default'
+              : 'interaction.sub-subtle.default'
           }
         >
-          {note.trigger === Trigger.DEATH ? 'Upon passing' : 'Immediate'}
-        </Text>
-      </Flex>
+          <Icon
+            as={note.trigger === Trigger.DEATH ? BiTimeFive : BiSend}
+            width="0.75rem"
+            height="0.75rem"
+          />
+          <Text
+            textStyle="legal"
+            textColor={
+              note.trigger === Trigger.DEATH
+                ? 'interaction.main.default'
+                : 'interaction.sub.default'
+            }
+          >
+            {note.trigger === Trigger.DEATH ? 'Upon passing' : 'Immediate'}
+          </Text>
+        </Flex>
+      ) : null}
+
       <DeleteNoteModal isOpen={isOpen} onClose={onClose} id={note.id} />
     </Card>
   )

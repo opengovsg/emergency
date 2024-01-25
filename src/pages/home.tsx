@@ -1,8 +1,7 @@
-import { Flex } from '@chakra-ui/react'
-import { SkeletonPostList } from '~/components/SkeletonPostList'
-import Suspense from '~/components/Suspense'
+import { Flex, Stack } from '@chakra-ui/react'
 import {
   ADMIN_NAVBAR_HEIGHT,
+  APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
 import { NoteHome } from '~/features/home/components/NoteHome'
@@ -10,7 +9,7 @@ import { DefaultBanner } from '~/features/home/components/DefaultBanner'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
-
+import { RestrictedFooter } from '@opengovsg/design-system-react'
 const Home: NextPageWithLayout = () => {
   return (
     <Flex
@@ -20,13 +19,10 @@ const Home: NextPageWithLayout = () => {
       left={{ base: 0, sm: undefined }}
       minH={`calc(100% - ${ADMIN_NAVBAR_HEIGHT})`}
     >
-      <AppGrid
-        templateColumns={APP_GRID_TEMPLATE_COLUMN}
-        px={{ base: '1rem', lg: 0 }}
-        bg="white"
-        py="1rem"
-      >
-        <DefaultBanner />
+      <AppGrid templateColumns={APP_GRID_TEMPLATE_COLUMN} bg="white" py="1rem">
+        <Stack gridColumn={APP_GRID_COLUMN}>
+          <DefaultBanner />
+        </Stack>
       </AppGrid>
       <AppGrid
         flex={1}
@@ -36,10 +32,11 @@ const Home: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
         alignItems="flex-start"
       >
-        <Suspense fallback={<SkeletonPostList />}>
+        <Stack gridColumn={APP_GRID_COLUMN}>
           <NoteHome />
-        </Suspense>
+        </Stack>
       </AppGrid>
+      <RestrictedFooter appLink="" appName="" />
     </Flex>
   )
 }

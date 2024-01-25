@@ -1,4 +1,4 @@
-import { Flex, Text, Divider, Icon } from '@chakra-ui/react'
+import { Divider, Flex, Icon, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { BiPlusCircle } from 'react-icons/bi'
 
@@ -6,7 +6,7 @@ export const AddNewNote = () => {
   const router = useRouter()
   return (
     <Flex
-      width="19.5rem"
+      width="full"
       flexDirection="column"
       alignItems="flex-start"
       gap="1rem"
@@ -36,8 +36,8 @@ export const AddNewNote = () => {
       >
         <Icon
           as={BiPlusCircle}
-          width="48px"
-          height="48px"
+          width="24px"
+          height="24px"
           color="interaction.main-subtle.default"
         />
       </Flex>

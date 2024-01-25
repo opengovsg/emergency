@@ -28,7 +28,7 @@ export const NoteFormText = ({
       gap="2rem"
       alignSelf="stretch"
     >
-      <Stack width="19.5rem" alignItems="flex-start" gap="1rem">
+      <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">What do you want to say?</Text>
         <Text textStyle="body-2">
           Leave your essential thoughts and instructions here. This space is for
@@ -41,7 +41,7 @@ export const NoteFormText = ({
           name="contentHtml"
           render={({ field: { onChange, ...field } }) => (
             <RichText
-              width="19.5rem"
+              width="full"
               {...field}
               onChange={(value, rawValue) => {
                 onChange(value)
@@ -53,11 +53,11 @@ export const NoteFormText = ({
         <FormErrorMessage>{errors.contentHtml?.message}</FormErrorMessage>
       </FormControl>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="19.5rem" alignItems="flex-start" onClick={handleNext}>
+        <Button width="full" alignItems="flex-start" onClick={handleNext}>
           Next
         </Button>
         <Button
-          width="19.5rem"
+          width="full"
           colorScheme="neutral"
           variant="clear"
           alignItems="center"

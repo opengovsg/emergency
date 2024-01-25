@@ -1,50 +1,46 @@
-import { Stack, Text, Flex } from '@chakra-ui/react'
+import { Flex, Stack, Text } from '@chakra-ui/react'
 import { Trigger } from '@prisma/client'
 import { RichText } from '~/components/RichText'
 interface FullNoteProps {
   nric: string
   trigger: Trigger
   contentHtml: string
+  isRecipient?: boolean
 }
 
-export const FullNote = ({ nric, trigger, contentHtml }: FullNoteProps) => {
+export const FullNote = ({
+  nric,
+  trigger,
+  contentHtml,
+  isRecipient = true,
+}: FullNoteProps) => {
   return (
-    <Stack alignItems="center" boxShadow="sm">
-      <Stack
+    <Flex
+      alignItems="center"
+      flexDirection="column"
+      boxShadow="sm"
+      borderRadius="0rem 0rem 0.25rem 0.25rem"
+      width="full"
+    >
+      <Flex
+        width="full"
+        flexDir="column"
         p="1rem"
         alignItems="flex-start"
         gap="1rem"
         borderRadius="0.25rem 0.25rem 0rem 0rem"
-        background="var(--color-blue-50, #F7F9FE)"
+        bgColor="blue.50"
       >
-        <Flex
-          width="17.5rem"
-          justifyContent="space-between"
-          alignItems="flex-end"
-        >
-          <Stack
-            width="17.5rem"
-            alignItems="flex-start"
-            gap="0.25rem"
-            flexShrink="0"
-          >
+        <Flex justifyContent="space-between" alignItems="flex-end" width="full">
+          <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
             <Text textColor="base.content.brand" textStyle="legal">
-              Message Recipient
+              {isRecipient ? 'Message Recipient' : 'Message Sender'}
             </Text>
             <Text textStyle="subhead-1">{nric}</Text>
           </Stack>
         </Flex>
-        <Flex
-          width="17.5rem"
-          justifyContent="space-between"
-          alignItems="flex-end"
-        >
-          <Stack
-            width="17.5rem"
-            alignItems="flex-start"
-            gap="0.25rem"
-            flexShrink="0"
-          >
+        <Flex justifyContent="space-between" alignItems="flex-end">
+          <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
             <Text textColor="base.content.brand" textStyle="legal">
               Time of Delivery
             </Text>
@@ -53,15 +49,16 @@ export const FullNote = ({ nric, trigger, contentHtml }: FullNoteProps) => {
             </Text>
           </Stack>
         </Flex>
-      </Stack>
-      <Stack
+      </Flex>
+      <Flex
         p="1rem"
         alignItems="center"
         gap="0.5rem"
         borderRadius="0rem 0rem 0.25rem 0.25rem"
+        width="full"
       >
-        <RichText width="17.5rem" defaultValue={contentHtml} isReadOnly />
-      </Stack>
-    </Stack>
+        <RichText defaultValue={contentHtml} isReadOnly />
+      </Flex>
+    </Flex>
   )
 }

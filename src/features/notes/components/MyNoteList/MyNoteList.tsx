@@ -7,7 +7,7 @@ export const MyNoteList = () => {
   const [data] = trpc.note.listCreated.useSuspenseQuery({})
   return (
     <Flex
-      width="19.5rem"
+      width="full"
       gap="1rem"
       alignItems="flex-start"
       flexDirection="column"

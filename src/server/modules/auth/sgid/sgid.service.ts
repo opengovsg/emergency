@@ -18,7 +18,9 @@ export const upsertSgidAccountAndUser = async ({
       where: {
         nric,
       },
-      update: {},
+      update: {
+        name,
+      },
       create: {
         name,
         nric,

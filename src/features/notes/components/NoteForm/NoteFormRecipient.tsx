@@ -27,14 +27,14 @@ export const NoteFormRecipient = ({
       gap="2rem"
       alignSelf="stretch"
     >
-      <Stack width="19.5rem" alignItems="flex-start" gap="1rem">
+      <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">Who are you sending this emergency note to?</Text>
         <Text textStyle="body-2">
           Please choose the intended recipient for your note from the dropdown
           menu below to ensure it reaches the right person.
         </Text>
       </Stack>
-      <Stack width="19.5rem" alignItems="flex-start" gap="0.5rem">
+      <Stack width="full" alignItems="flex-start" gap="0.5rem">
         <Text textStyle="subhead-1">Message recipient</Text>
         <FormControl isRequired isInvalid={!!errors.nric}>
           <Controller
@@ -58,11 +58,11 @@ export const NoteFormRecipient = ({
         </FormControl>
       </Stack>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="19.5rem" alignItems="flex-start" onClick={handleNext}>
+        <Button width="full" alignItems="flex-start" onClick={handleNext}>
           Next
         </Button>
         <Button
-          width="19.5rem"
+          width="full"
           colorScheme="neutral"
           variant="clear"
           alignItems="center"

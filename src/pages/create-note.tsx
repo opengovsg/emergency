@@ -1,14 +1,14 @@
-import { Flex } from '@chakra-ui/react'
-import { SkeletonPostList } from '~/components/SkeletonPostList'
+import { Flex, Stack } from '@chakra-ui/react'
 import {
   ADMIN_NAVBAR_HEIGHT,
+  APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
 import { NoteForm } from '~/features/notes/components/NoteForm/NoteForm'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
-
+import { RestrictedFooter } from '@opengovsg/design-system-react'
 const CreateNote: NextPageWithLayout = () => {
   return (
     <Flex
@@ -26,8 +26,11 @@ const CreateNote: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
         alignItems="flex-start"
       >
-        <NoteForm />
+        <Stack gridColumn={APP_GRID_COLUMN}>
+          <NoteForm />
+        </Stack>
       </AppGrid>
+      <RestrictedFooter appLink="" appName="" />
     </Flex>
   )
 }

@@ -1,16 +1,23 @@
-import { Flex, Stack, Button, Text, Skeleton } from '@chakra-ui/react'
+import {
+  Button,
+  Flex,
+  Skeleton,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { RestrictedFooter } from '@opengovsg/design-system-react'
 import { useRouter } from 'next/router'
 import { BackBanner } from '~/components/BackBanner'
-import { APP_GRID_TEMPLATE_COLUMN } from '~/constants/layouts'
+import Suspense from '~/components/Suspense'
+import { APP_GRID_COLUMN, APP_GRID_TEMPLATE_COLUMN } from '~/constants/layouts'
+import { DeleteNoteModal } from '~/features/notes/components/DeleteNoteModal'
+import { FullNote } from '~/features/notes/components/Note/FullNote'
+import { EDIT_NOTE } from '~/lib/routes'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { NoteLayout } from '~/templates/layouts/NoteLayout'
 import { trpc } from '~/utils/trpc'
-import { FullNote } from '~/features/notes/components/Note/FullNote'
-import { DeleteNoteModal } from '~/features/notes/components/DeleteNoteModal'
-import { useDisclosure } from '@chakra-ui/react'
-import { EDIT_NOTE } from '~/lib/routes'
-import Suspense from '~/components/Suspense'
 const NotePage: NextPageWithLayout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
@@ -25,9 +32,10 @@ const NotePage: NextPageWithLayout = () => {
           templateColumns={APP_GRID_TEMPLATE_COLUMN}
           bg="white"
           py="1rem"
-          px={{ base: '1rem', lg: 0 }}
         >
-          <BackBanner />
+          <Stack gridColumn="1 / -1">
+            <BackBanner />
+          </Stack>
         </AppGrid>
         <AppGrid
           flex={1}
@@ -36,23 +44,24 @@ const NotePage: NextPageWithLayout = () => {
           templateColumns={APP_GRID_TEMPLATE_COLUMN}
           px={{ base: '1rem', lg: 0 }}
         >
-          <Stack alignItems="center" gap="2rem">
+          <Stack gap="2rem" gridColumn={APP_GRID_COLUMN} spacing="2">
             <FullNote
-              nric={data.nric}
+              nric={data.authorNric}
               trigger={data.trigger}
               contentHtml={data.contentHtml}
+              isRecipient={false}
             />
             {data.isAuthor ? (
               <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
                 <Button
-                  width="19.5rem"
+                  width="full"
                   alignItems="flex-start"
                   onClick={() => router.push(`${EDIT_NOTE}/${noteId}`)}
                 >
                   <Text textStyle="subhead-2">Edit note</Text>
                 </Button>
                 <Button
-                  width="19.5rem"
+                  width="full"
                   colorScheme="neutral"
                   variant="clear"
                   alignItems="center"
@@ -65,6 +74,7 @@ const NotePage: NextPageWithLayout = () => {
           </Stack>
           <DeleteNoteModal isOpen={isOpen} onClose={onClose} id={noteId} />
         </AppGrid>
+        <RestrictedFooter appLink="" appName="" />
       </Flex>
     </Suspense>
   )

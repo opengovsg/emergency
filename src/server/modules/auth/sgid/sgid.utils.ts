@@ -1,12 +1,14 @@
+import nric from 'nric'
 import { z } from 'zod'
 import { sgid } from '~/lib/sgid'
-import nric from 'nric'
 
 const expectedUserInfo = z.object({
   sub: z.string(),
   data: z.object({
     'myinfo.name': z.string(),
     'myinfo.nric_number': z.string().refine((val) => nric.validate(val)),
+    'myinfo.children_birth_records': z.string(),
+    'myinfo.sponsored_children_records': z.string(),
   }),
 })
 export type SgidUserInfo = z.infer<typeof expectedUserInfo>
@@ -14,6 +16,9 @@ export type SgidUserInfo = z.infer<typeof expectedUserInfo>
 export const sgidSessionProfileSchema = z.object({
   name: expectedUserInfo.shape.data.shape['myinfo.name'],
   nric: expectedUserInfo.shape.data.shape['myinfo.nric_number'],
+  children: expectedUserInfo.shape.data.shape['myinfo.children_birth_records'],
+  sponsoredChildren:
+    expectedUserInfo.shape.data.shape['myinfo.sponsored_children_records'],
   sub: expectedUserInfo.shape.sub,
   expiry: z.number(),
 })

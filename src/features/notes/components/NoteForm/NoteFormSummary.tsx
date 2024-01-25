@@ -28,7 +28,7 @@ export const NoteFormSummary = ({
       gap="2rem"
       alignSelf="stretch"
     >
-      <Stack width="19.5rem" alignItems="flex-start" gap="1rem">
+      <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">Review your emergency note</Text>
         <Text textStyle="body-2">
           {formData.trigger === Trigger.DEATH
@@ -45,11 +45,7 @@ export const NoteFormSummary = ({
         contentHtml={formData.contentHtml}
       />
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button
-          width="19.5rem"
-          alignItems="flex-start"
-          onClick={handleSubmitNote}
-        >
+        <Button width="full" alignItems="flex-start" onClick={handleSubmitNote}>
           <Text textStyle="subhead-2">
             {formData.trigger === Trigger.DEATH
               ? 'Save and schedule note'
@@ -57,7 +53,7 @@ export const NoteFormSummary = ({
           </Text>
         </Button>
         <Button
-          width="19.5rem"
+          width="full"
           colorScheme="neutral"
           variant="clear"
           alignItems="center"

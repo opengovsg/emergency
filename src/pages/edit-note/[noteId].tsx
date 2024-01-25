@@ -1,21 +1,26 @@
-import { Flex, Skeleton } from '@chakra-ui/react'
+import { Flex, Skeleton, Stack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import Suspense from '~/components/Suspense'
 import {
   ADMIN_NAVBAR_HEIGHT,
+  APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
 import { NoteForm } from '~/features/notes/components/NoteForm/NoteForm'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
-import { useRouter } from 'next/router'
 import { trpc } from '~/utils/trpc'
-import Suspense from '~/components/Suspense'
 const EditNote: NextPageWithLayout = () => {
   const router = useRouter()
   const noteId = String(router.query.noteId)
   const [data] = trpc.note.byId.useSuspenseQuery({
     id: noteId,
   })
+  const reformatData = {
+    nric: data.recipientNric,
+    ...data,
+  }
   return (
     <Flex
       w="100%"
@@ -32,9 +37,11 @@ const EditNote: NextPageWithLayout = () => {
         px={{ base: '1rem', lg: 0 }}
         alignItems="flex-start"
       >
-        <Suspense fallback={<Skeleton />}>
-          <NoteForm note={data} />
-        </Suspense>
+        <Stack gridColumn={APP_GRID_COLUMN}>
+          <Suspense fallback={<Skeleton />}>
+            <NoteForm note={reformatData} />
+          </Suspense>
+        </Stack>
       </AppGrid>
     </Flex>
   )
