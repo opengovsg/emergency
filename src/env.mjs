@@ -17,8 +17,9 @@ const coerceBoolean = z
 const client = z.object({
   NEXT_PUBLIC_ENABLE_STORAGE: coerceBoolean.default('false'),
   NEXT_PUBLIC_ENABLE_SGID: coerceBoolean.default('false'),
-  NEXT_PUBLIC_APP_NAME: z.string().default('Starter Kit'),
+  NEXT_PUBLIC_APP_NAME: z.string().default('eNotes'),
   NEXT_PUBLIC_APP_VERSION: z.string().default('0.0.0'),
+  NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY: z.string(),
 })
 
 /** Feature flags */
@@ -156,6 +157,8 @@ const processEnv = {
     process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
   NEXT_PUBLIC_ENABLE_STORAGE: process.env.NEXT_PUBLIC_ENABLE_STORAGE,
   NEXT_PUBLIC_ENABLE_SGID: process.env.NEXT_PUBLIC_ENABLE_SGID,
+  NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
+    process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY,
 }
 
 // Don't touch the part below
