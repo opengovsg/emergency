@@ -9,12 +9,6 @@ export const noteRouter = router({
   listCreated: protectedProcedure
     .input(listNotesInputSchema)
     .query(async ({ input, ctx }) => {
-      /**
-       * For pagination docs you can have a look here
-       * @see https://trpc.io/docs/useInfiniteQuery
-       * @see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-       */
-
       const limit = input.limit ?? 50
       const { cursor } = input
 
@@ -47,12 +41,6 @@ export const noteRouter = router({
   listReceived: protectedProcedure
     .input(listNotesInputSchema)
     .query(async ({ input, ctx }) => {
-      /**
-       * For pagination docs you can have a look here
-       * @see https://trpc.io/docs/useInfiniteQuery
-       * @see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-       */
-
       const limit = input.limit ?? 50
       const { cursor } = input
 

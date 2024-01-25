@@ -26,28 +26,37 @@ const expectedUserInfo = z.object({
   data: z.object({
     'myinfo.name': z.string(),
     'myinfo.nric_number': z.string().refine((val) => nric.validate(val)),
-    'myinfo.children_birth_records': z.string().transform((value, ctx) => {
-      const result = safeSchemaJsonParse(childrenBirthRecordsSchema, value)
-      if (!result.success) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: result.error.message,
-        })
-        return z.NEVER
-      }
-      return result.data
-    }),
-    'myinfo.sponsored_children_records': z.string().transform((value, ctx) => {
-      const result = safeSchemaJsonParse(sponsoredChildrenRecordsSchema, value)
-      if (!result.success) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: result.error.message,
-        })
-        return z.NEVER
-      }
-      return result.data
-    }),
+    'myinfo.children_birth_records': z
+      .string()
+      .transform((value, ctx) => {
+        const result = safeSchemaJsonParse(childrenBirthRecordsSchema, value)
+        if (!result.success) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: result.error.message,
+          })
+          return z.NEVER
+        }
+        return result.data
+      })
+      .optional(),
+    'myinfo.sponsored_children_records': z
+      .string()
+      .transform((value, ctx) => {
+        const result = safeSchemaJsonParse(
+          sponsoredChildrenRecordsSchema,
+          value,
+        )
+        if (!result.success) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: result.error.message,
+          })
+          return z.NEVER
+        }
+        return result.data
+      })
+      .optional(),
   }),
 })
 export type SgidUserInfo = z.infer<typeof expectedUserInfo>
@@ -81,5 +90,6 @@ export const getUserInfo = async ({
     codeVerifier,
   })
   const userinfo = await sgid.userinfo({ sub, accessToken })
+
   return expectedUserInfo.parse(userinfo)
 }

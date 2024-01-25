@@ -1,12 +1,7 @@
-import { Flex, HStack, type As } from '@chakra-ui/react'
-import {
-  Button,
-  IconButton,
-  Link,
-  useIsMobile,
-} from '@opengovsg/design-system-react'
+import { Flex, type As } from '@chakra-ui/react'
+import { IconButton, Link, useIsMobile } from '@opengovsg/design-system-react'
+import Image from 'next/image'
 import NextLink from 'next/link'
-import { SIGN_IN } from '~/lib/routes'
 import { AppGrid } from '~/templates/AppGrid'
 
 type PublicHeaderLinkProps = {
@@ -63,25 +58,14 @@ export const AppPublicHeader = ({
   publicHeaderLinks,
 }: AppPublicHeaderProps): JSX.Element => {
   return (
-    <AppGrid px="1.5rem" bg="base.canvas.brand-subtle">
+    <AppGrid px="1.5rem" bg="white">
       <Flex
         gridColumn={{ base: '1 / -1', md: '2 / 12' }}
-        justify="space-between"
+        justify="center"
         align="center"
         py={{ base: '0.625rem', md: '4.5rem' }}
       >
-        <NextLink href="/">Starter Kit</NextLink>
-        <HStack
-          textStyle="subhead-1"
-          spacing={{ base: '1rem', md: '2rem', xl: '2.5rem' }}
-        >
-          {publicHeaderLinks?.map((link, index) => (
-            <PublicHeaderLink key={index} {...link} />
-          ))}
-          <Button variant="solid" as={NextLink} href={SIGN_IN}>
-            Log in
-          </Button>
-        </HStack>
+        <Image src="/assets/banner.svg" width={360} height={225} alt="Banner" />
       </Flex>
     </AppGrid>
   )

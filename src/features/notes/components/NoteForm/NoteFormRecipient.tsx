@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
@@ -67,21 +68,23 @@ export const NoteFormRecipient = ({
           {hasChildren && (
             <Stack width="full" alignItems="flex-start" gap="0.5rem">
               <FormLabel>Message recipient</FormLabel>
-              <SingleSelect
-                isClearable={false}
-                items={[
-                  ...me.children.map((child) => {
-                    return {
-                      label: `${child.nric} - ${child.name}`,
-                      value: child.nric,
-                    }
-                  }),
-                  { label: 'Other', value: 'other' },
-                ]}
-                onChange={handleSelectChange}
-                value={selectedOption}
-                name="Recipient"
-              />
+              <Box width="full">
+                <SingleSelect
+                  isClearable={false}
+                  items={[
+                    ...me.children.map((child) => {
+                      return {
+                        label: `${child.nric} - ${child.name}`,
+                        value: child.nric,
+                      }
+                    }),
+                    { label: 'Other', value: 'other' },
+                  ]}
+                  onChange={handleSelectChange}
+                  value={selectedOption}
+                  name="Recipient"
+                />
+              </Box>
             </Stack>
           )}
           <Stack

@@ -1,8 +1,8 @@
+import { Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
 import { useRouter } from 'next/router'
-import { trpc } from '~/utils/trpc'
-import { Box, Flex, Stack, Text } from '@chakra-ui/react'
 import { SingpassFullLogo } from '~/components/Svg/SingpassFullLogo'
+import { trpc } from '~/utils/trpc'
 import { getRedirectUrl } from '~/utils/url'
 
 export const SgidLoginButton = (): JSX.Element | null => {
@@ -26,6 +26,7 @@ export const SgidLoginButton = (): JSX.Element | null => {
       <Stack gap="0.75rem">
         <Button
           colorScheme="neutral"
+          bgColor="grey.900"
           height="2.75rem"
           size="xs"
           variant="outline"
@@ -34,12 +35,17 @@ export const SgidLoginButton = (): JSX.Element | null => {
           aria-label="Log in with Singpass app"
         >
           <Flex align="center" flexDirection="row" aria-hidden>
-            <Text>Log in with </Text>
+            <Text textStyle="subhead-2" textColor="base.content.inverse">
+              Log in with{' '}
+            </Text>
             {/* Negative margin so the svg sits on the same line as the text */}
             <Box mb="-3px">
-              <SingpassFullLogo height="1rem" />
+              <SingpassFullLogo color="#E04240" height="1rem" />
             </Box>
-            <Text> app</Text>
+            <Text textStyle="subhead-2" textColor="base.content.inverse">
+              {' '}
+              app
+            </Text>
           </Flex>
         </Button>
       </Stack>

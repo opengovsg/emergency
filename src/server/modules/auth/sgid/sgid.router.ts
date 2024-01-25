@@ -104,7 +104,11 @@ export const sgidRouter = router({
       try {
         sgidUserInfo = await getUserInfo({ code, codeVerifier, nonce })
       } catch (error) {
-        ctx.logger.warn({ state }, 'Unable to fetch user info from sgID')
+        ctx.logger.warn(
+          { state },
+          'Unable to fetch user info from sgID',
+          (error as Error).message,
+        )
         // Redirect back to sign in page with error.
         // TODO: Change this to throw an error instead, and then handle it in the client.
         return {
