@@ -15,6 +15,7 @@ export const getBaseUrl = () => {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`
+  }
   if (process.env.VERCEL_BRANCH_URL) {
     return `https://${process.env.VERCEL_BRANCH_URL}`
   }
