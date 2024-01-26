@@ -6,16 +6,12 @@ import { env } from '~/env.mjs'
  */
 export const getBaseUrl = () => {
   if (typeof window !== 'undefined') {
-    return ''
     return window.location.origin
   }
   if (env.NEXT_PUBLIC_APP_URL) {
     return env.NEXT_PUBLIC_APP_URL
   }
   // reference for vercel.com
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`
-  }
   if (process.env.VERCEL_BRANCH_URL) {
     return `https://${process.env.VERCEL_BRANCH_URL}`
   }
