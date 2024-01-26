@@ -20,6 +20,7 @@ const client = z.object({
   NEXT_PUBLIC_APP_NAME: z.string().default('eNotes'),
   NEXT_PUBLIC_APP_VERSION: z.string().default('0.0.0'),
   NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY: z.string(),
+  NEXT_PUBLIC_APP_URL: z.string().optional(),
 })
 
 /** Feature flags */
@@ -159,6 +160,7 @@ const processEnv = {
   NEXT_PUBLIC_ENABLE_SGID: process.env.NEXT_PUBLIC_ENABLE_SGID,
   NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY:
     process.env.NEXT_PUBLIC_GROWTHBOOK_CLIENT_KEY,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
 }
 
 // Don't touch the part below
