@@ -46,7 +46,7 @@ const NotePage: NextPageWithLayout = () => {
         >
           <Stack gap="2rem" gridColumn={APP_GRID_COLUMN} spacing="2">
             <FullNote
-              nric={data.recipientNric}
+              nric={data.isAuthor ? data.recipientNric : data.authorNric}
               trigger={data.trigger}
               contentHtml={data.contentHtml}
               isAuthor={data.isAuthor}
