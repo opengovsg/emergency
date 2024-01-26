@@ -2,8 +2,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "javascript.validate.enable": true,
   "editor.formatOnPaste": false,
-  // "editor.codeActionsOnSave": {
-  //   "source.organizeImports": "explicit",
-  //   "source.fixAll.eslint": "explicit"
-  // }
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  }
 }
