@@ -1,16 +1,16 @@
+import { Stack } from '@chakra-ui/react'
+import { useToast } from '@opengovsg/design-system-react'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { NoteFormNavbar } from './NoteFormNavbar'
-import { Stack } from '@chakra-ui/react'
-import { NoteFormRecipient } from './NoteFormRecipient'
+import { type z } from 'zod'
 import { useZodForm } from '~/lib/form'
 import { addNoteSchema } from '~/schemas/note'
+import { trpc } from '~/utils/trpc'
+import { NoteFormNavbar } from './NoteFormNavbar'
+import { NoteFormRecipient } from './NoteFormRecipient'
+import { NoteFormSummary } from './NoteFormSummary'
 import { NoteFormText } from './NoteFormText'
 import { NoteFormTrigger } from './NoteFormTrigger'
-import { NoteFormSummary } from './NoteFormSummary'
-import { trpc } from '~/utils/trpc'
-import { useToast } from '@opengovsg/design-system-react'
-import { type z } from 'zod'
 
 interface NoteFormProps {
   note?: z.infer<typeof addNoteSchema>
@@ -54,7 +54,7 @@ export const NoteForm = ({ note }: NoteFormProps) => {
 
   const validateStep = async (step: number) => {
     if (step === 1) {
-      return await trigger('nric')
+      return await trigger(['nric', 'mobile'])
     } else if (step === 2) {
       return await trigger(['content', 'contentHtml'])
     } else if (step === 3) {

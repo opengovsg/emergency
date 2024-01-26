@@ -11,13 +11,6 @@ generator client {
   previewFeatures = ["fullTextSearch"]
 }
 
-model VerificationToken {
-  identifier String   @id
-  token      String
-  attempts   Int      @default(0)
-  expires    DateTime
-}
-
 model Note {
   id            String    @id @default(cuid())
   content       String    @db.Text
@@ -42,6 +35,7 @@ model User {
   id            String  @id @default(cuid())
   nric          String  @unique
   name          String?
+  mobile        String?
   authoredNotes Note[]  @relation("AuthorRelation")
   receivedNotes Note[]  @relation("RecipientRelation")
   isDead        Boolean @default(false)

@@ -99,6 +99,12 @@ export const noteRouter = router({
           message: `No note with id '${id}'`,
         })
       }
+      if (!note.recipient.mobile) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `Note lacks recipient mobile`,
+        })
+      }
       if (
         note.authorId !== ctx.user.id &&
         note.recipient.nric !== ctx.user.nric
@@ -125,6 +131,7 @@ export const noteRouter = router({
         trigger: note.trigger,
         content: note.content,
         contentHtml: note.contentHtml,
+        mobile: note.recipient.mobile,
         id: note.id,
         isAuthor: ctx.session?.userId === note.authorId,
       }
@@ -132,48 +139,54 @@ export const noteRouter = router({
     }),
   add: protectedProcedure
     .input(addNoteSchema)
-    .mutation(async ({ input: { nric, ...input }, ctx }) => {
-      let note
-      if (input.id) {
-        // Perform upsert if id is defined
-        note = await ctx.prisma.note.upsert({
-          where: { id: input.id },
-          update: {
-            ...input,
-            recipient: {
-              connectOrCreate: {
-                create: { nric },
-                where: { nric },
+    .mutation(async ({ input: { nric, mobile, ...input }, ctx }) => {
+      return await ctx.prisma.$transaction(async (tx) => {
+        let note
+        if (input.id) {
+          // Perform upsert if id is defined
+          note = await tx.note.upsert({
+            where: { id: input.id },
+            update: {
+              ...input,
+              recipient: {
+                connectOrCreate: {
+                  create: { nric, mobile },
+                  where: { nric },
+                },
               },
             },
-          },
-          create: {
-            ...input,
-            author: { connect: { id: ctx.user.id } },
-            recipient: {
-              connectOrCreate: {
-                create: { nric },
-                where: { nric },
+            create: {
+              ...input,
+              author: { connect: { id: ctx.user.id } },
+              recipient: {
+                connectOrCreate: {
+                  create: { nric, mobile },
+                  where: { nric },
+                },
               },
             },
-          },
+          })
+        } else {
+          // Perform create if id is undefined
+          note = await tx.note.create({
+            data: {
+              ...input,
+              author: { connect: { id: ctx.user.id } },
+              recipient: {
+                connectOrCreate: {
+                  create: { nric, mobile },
+                  where: { nric },
+                },
+              },
+            },
+          })
+        }
+        await tx.user.update({
+          where: { nric },
+          data: { mobile },
         })
-      } else {
-        // Perform create if id is undefined
-        note = await ctx.prisma.note.create({
-          data: {
-            ...input,
-            author: { connect: { id: ctx.user.id } },
-            recipient: {
-              connectOrCreate: {
-                create: { nric },
-                where: { nric },
-              },
-            },
-          },
-        })
-      }
-      return note
+        return note
+      })
     }),
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))

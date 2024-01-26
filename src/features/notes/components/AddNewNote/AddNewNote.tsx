@@ -17,9 +17,6 @@ export const AddNewNote = () => {
         alignSelf="stretch"
         gap="0.5rem"
       >
-        <Text textStyle="caption-2" alignSelf="stretch">
-          Write a new emergency note
-        </Text>
         <Divider color="base.divider.medium" />
       </Flex>
       <Flex
@@ -33,6 +30,7 @@ export const AddNewNote = () => {
         justifyContent="center"
         cursor="pointer"
         onClick={() => router.push('/create-note')}
+        gap="0.5rem"
       >
         <Icon
           as={BiPlusCircle}
@@ -40,6 +38,9 @@ export const AddNewNote = () => {
           height="24px"
           color="interaction.main-subtle.default"
         />
+        <Text textStyle="subhead-1" textColor="base.content.inverse">
+          Write a new emergency note
+        </Text>
       </Flex>
     </Flex>
   )

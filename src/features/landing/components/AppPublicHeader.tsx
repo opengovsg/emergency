@@ -1,7 +1,5 @@
 import { Flex, type As } from '@chakra-ui/react'
-import { IconButton, Link, useIsMobile } from '@opengovsg/design-system-react'
 import Image from 'next/image'
-import NextLink from 'next/link'
 import { AppGrid } from '~/templates/AppGrid'
 
 type PublicHeaderLinkProps = {
@@ -16,47 +14,45 @@ export interface AppPublicHeaderProps {
   publicHeaderLinks?: PublicHeaderLinkProps[]
 }
 
-const PublicHeaderLink = ({
-  showOnMobile,
-  MobileIcon,
-  href,
-  label,
-}: PublicHeaderLinkProps) => {
-  const isMobile = useIsMobile()
+// const PublicHeaderLink = ({
+//   showOnMobile,
+//   MobileIcon,
+//   href,
+//   label,
+// }: PublicHeaderLinkProps) => {
+//   const isMobile = useIsMobile()
 
-  if (isMobile && !showOnMobile) {
-    return null
-  }
+//   if (isMobile && !showOnMobile) {
+//     return null
+//   }
 
-  if (isMobile && MobileIcon) {
-    return (
-      <IconButton
-        variant="clear"
-        as={NextLink}
-        href={href}
-        aria-label={label}
-        icon={<MobileIcon fontSize="1.25rem" color="primary.500" />}
-      />
-    )
-  }
+//   if (isMobile && MobileIcon) {
+//     return (
+//       <IconButton
+//         variant="clear"
+//         as={NextLink}
+//         href={href}
+//         aria-label={label}
+//         icon={<MobileIcon fontSize="1.25rem" color="primary.500" />}
+//       />
+//     )
+//   }
 
-  return (
-    <Link
-      as={NextLink}
-      w="fit-content"
-      variant="standalone"
-      color="primary.500"
-      href={href}
-      aria-label={label}
-    >
-      {label}
-    </Link>
-  )
-}
+//   return (
+//     <Link
+//       as={NextLink}
+//       w="fit-content"
+//       variant="standalone"
+//       color="primary.500"
+//       href={href}
+//       aria-label={label}
+//     >
+//       {label}
+//     </Link>
+//   )
+// }
 
-export const AppPublicHeader = ({
-  publicHeaderLinks,
-}: AppPublicHeaderProps): JSX.Element => {
+export const AppPublicHeader = ({}: AppPublicHeaderProps): JSX.Element => {
   return (
     <AppGrid px="1.5rem" bg="white">
       <Flex

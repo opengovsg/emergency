@@ -6,12 +6,14 @@ export const upsertSgidAccountAndUser = async ({
   prisma,
   name,
   nric,
+  mobile,
   sponsoredChildren,
   children,
 }: {
   prisma: PrismaClient
   name: SgidSessionProfile['name']
   nric: SgidSessionProfile['nric']
+  mobile: SgidSessionProfile['mobile']
   sub: SgidSessionProfile['sub']
   sponsoredChildren?: SgidSessionProfile['sponsoredChildren']
   children?: SgidSessionProfile['children']
@@ -24,10 +26,12 @@ export const upsertSgidAccountAndUser = async ({
       },
       update: {
         name,
+        mobile,
       },
       create: {
         name,
         nric,
+        mobile,
       },
     })
     if (sponsoredChildren) {

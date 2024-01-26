@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { RestrictedFooter, useIsMobile } from '@opengovsg/design-system-react'
+import { RestrictedFooter } from '@opengovsg/design-system-react'
 import { AppPublicHeader, LandingSection } from '~/features/landing/components'
 import {
   SgidLoginButton,
@@ -46,7 +46,7 @@ const accordionItems = [
 ]
 
 const LandingPage = () => {
-  const isMobile = useIsMobile()
+  // const isMobile = useIsMobile()
   return (
     <>
       <AppPublicHeader />
@@ -90,7 +90,7 @@ const LandingPage = () => {
             containerProps={{
               px: 0,
             }}
-            appName="Starter Kit"
+            appName="eNotes"
             appLink="/"
           />
         </Box>

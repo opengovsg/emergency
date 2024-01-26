@@ -50,6 +50,7 @@ const NotePage: NextPageWithLayout = () => {
               trigger={data.trigger}
               contentHtml={data.contentHtml}
               isAuthor={data.isAuthor}
+              mobile={data.mobile}
             />
             {data.isAuthor ? (
               <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">

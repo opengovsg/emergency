@@ -3,6 +3,7 @@ import { Trigger } from '@prisma/client'
 import { RichText } from '~/components/RichText'
 interface FullNoteProps {
   nric: string
+  mobile: string
   trigger: Trigger
   contentHtml: string
   isAuthor?: boolean
@@ -10,6 +11,7 @@ interface FullNoteProps {
 
 export const FullNote = ({
   nric,
+  mobile,
   trigger,
   contentHtml,
   isAuthor = true,
@@ -37,6 +39,14 @@ export const FullNote = ({
               {isAuthor ? 'Message Recipient' : 'Message Sender'}
             </Text>
             <Text textStyle="subhead-1">{nric}</Text>
+          </Stack>
+        </Flex>
+        <Flex justifyContent="space-between" alignItems="flex-end" width="full">
+          <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
+            <Text textColor="base.content.brand" textStyle="legal">
+              Mobile number
+            </Text>
+            <Text textStyle="subhead-1">{mobile}</Text>
           </Stack>
         </Flex>
         <Flex justifyContent="space-between" alignItems="flex-end">

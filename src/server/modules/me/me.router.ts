@@ -4,13 +4,13 @@
  */
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '~/server/trpc'
-import { defaultMeSelect } from './me.select'
+import { childrenMeSelect } from './me.select'
 
 export const meRouter = router({
   get: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.user.findUniqueOrThrow({
       where: { id: ctx.user.id },
-      select: defaultMeSelect,
+      select: childrenMeSelect,
     })
   }),
   // to remove when go live

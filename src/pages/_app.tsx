@@ -1,5 +1,5 @@
-import '@fontsource/ibm-plex-mono'; // Import if using code textStyles.
-import 'inter-ui/inter.css'; // Strongly recommended.
+import '@fontsource/ibm-plex-mono' // Import if using code textStyles.
+import 'inter-ui/inter.css' // Strongly recommended.
 
 import { Skeleton, Stack } from '@chakra-ui/react'
 import {

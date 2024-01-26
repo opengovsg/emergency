@@ -43,6 +43,7 @@ export const NoteFormSummary = ({
         nric={formData.nric}
         trigger={formData.trigger}
         contentHtml={formData.contentHtml}
+        mobile={formData.mobile}
       />
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
         <Button width="full" alignItems="flex-start" onClick={handleSubmitNote}>

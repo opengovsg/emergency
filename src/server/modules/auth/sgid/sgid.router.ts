@@ -123,6 +123,7 @@ export const sgidRouter = router({
         prisma: ctx.prisma,
         name: sgidUserInfo.data['myinfo.name'],
         nric: sgidUserInfo.data['myinfo.nric_number'],
+        mobile: sgidUserInfo.data['myinfo.mobile_number'],
         children: sgidUserInfo.data['myinfo.children_birth_records'],
         sponsoredChildren:
           sgidUserInfo.data['myinfo.sponsored_children_records'],

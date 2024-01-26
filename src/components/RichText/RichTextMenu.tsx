@@ -9,7 +9,6 @@ import {
   BiListOl,
   BiListUl,
   BiStrikethrough,
-  BiText,
 } from 'react-icons/bi'
 
 type MenuButton =

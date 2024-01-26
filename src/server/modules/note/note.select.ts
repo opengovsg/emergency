@@ -19,6 +19,7 @@ export const defaultNoteSelect = Prisma.validator<Prisma.NoteSelect>()({
     select: {
       nric: true,
       name: true,
+      mobile: true,
     },
   },
 })

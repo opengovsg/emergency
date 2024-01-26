@@ -3,12 +3,13 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Input,
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { SingleSelect } from '@opengovsg/design-system-react'
+import { PhoneNumberInput, SingleSelect } from '@opengovsg/design-system-react'
 import { useState } from 'react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { useMe } from '~/features/me/api'
@@ -47,7 +48,6 @@ export const NoteFormRecipient = ({
       setValue('nric', '')
     }
   }
-
   return (
     <Stack
       px="1.5rem"
@@ -122,6 +122,29 @@ export const NoteFormRecipient = ({
             )}
           </Stack>
         </Stack>
+      </FormControl>
+      <FormControl isRequired isInvalid={!!errors.mobile}>
+        <FormLabel>Mobile number</FormLabel>
+        <Controller
+          name="mobile"
+          render={({ field }) => (
+            <PhoneNumberInput
+              mb="0.5rem"
+              allowInternational={false}
+              defaultCountry="SG"
+              {...field}
+            />
+          )}
+          control={control}
+        />
+        <FormErrorMessage>
+          {errors.mobile && errors.mobile.message}
+        </FormErrorMessage>
+        <FormHelperText>
+          <Text textStyle="legal">
+            Your recipient will receive a SMS when this eNote is delivered
+          </Text>
+        </FormHelperText>
       </FormControl>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
         <Button width="full" alignItems="flex-start" onClick={handleNext}>
