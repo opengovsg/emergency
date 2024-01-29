@@ -30,6 +30,7 @@ export const NoteFormRecipient = ({
     formState: { errors },
     setValue,
     watch,
+    trigger,
   } = props
   const watchedNric = watch('nric') // Watch the `nric` field
   const { me } = useMe()
@@ -101,14 +102,14 @@ export const NoteFormRecipient = ({
                 <Controller
                   name="nric"
                   control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                  render={({ field: { onChange, value, ref } }) => (
                     <>
                       <Input
                         id="nricInput"
                         isRequired
                         placeholder="Enter the recipient's NRIC"
                         onChange={onChange}
-                        onBlur={onBlur}
+                        onBlur={() => trigger('nric')}
                         value={value}
                         ref={ref}
                       />
@@ -127,12 +128,15 @@ export const NoteFormRecipient = ({
         <FormLabel>Mobile number</FormLabel>
         <Controller
           name="mobile"
-          render={({ field }) => (
+          render={({ field: { onChange, value, ref } }) => (
             <PhoneNumberInput
+              onBlur={() => trigger('mobile')}
               mb="0.5rem"
               allowInternational={false}
               defaultCountry="SG"
-              {...field}
+              onChange={onChange}
+              value={value}
+              ref={ref}
             />
           )}
           control={control}
