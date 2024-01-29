@@ -6,7 +6,14 @@ import { getBaseUrl } from '~/utils/getBaseUrl'
  * Remember to also update the scope in sgID's developer portal:
  * https://developer.id.gov.sg/dashboard.
  */
-export const APP_SGID_SCOPE = ['openid', 'myinfo.name', 'myinfo.nric_number']
+export const APP_SGID_SCOPE = [
+  'openid',
+  'myinfo.name',
+  'myinfo.nric_number',
+  'myinfo.mobile_number',
+  'myinfo.children_birth_records',
+  'myinfo.sponsored_children_records',
+]
 
 const sgidOptions = {
   clientId: env.SGID_CLIENT_ID,
