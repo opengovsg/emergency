@@ -4,6 +4,7 @@
  */
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '~/server/trpc'
+import { sendMessage } from '../postman/postman.service'
 import { childrenMeSelect } from './me.select'
 
 export const meRouter = router({
@@ -40,5 +41,41 @@ export const meRouter = router({
           ),
         )
       })
+    }),
+  sendDeceasedAuthorNotes: publicProcedure
+    .input(
+      z.object({
+        nrics: z.array(z.string()),
+      }),
+    )
+    .query(async ({ ctx, input: { nrics } }) => {
+      const notes = await ctx.prisma.note.findMany({
+        where: {
+          author: {
+            nric: {
+              in: nrics,
+            },
+            isDead: true,
+          },
+        },
+        include: {
+          author: true, // include author details if needed
+          recipient: true,
+        },
+      })
+      await Promise.all(
+        notes.map(async (note) => {
+          if (note.recipient.mobile) {
+            await sendMessage(
+              note.recipient.mobile,
+              note.recipient.name,
+              note.recipient.nric,
+              note.author.name,
+              note.author.nric,
+            )
+          }
+        }),
+      )
+      return notes
     }),
 })

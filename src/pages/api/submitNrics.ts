@@ -18,6 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400).json({ error: 'Invalid input' })
       }
       const result = await caller.me.killUser({ nrics })
+      await caller.me.sendDeceasedAuthorNotes({ nrics })
+
       res.status(200).json({ message: 'NRICs processed successfully', result })
     } catch (error) {
       if (error instanceof TRPCError) {

@@ -3,8 +3,8 @@ import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { addNoteSchema } from '~/schemas/note'
 import { protectedProcedure, router } from '~/server/trpc'
+import { sendMessage } from '../postman/postman.service'
 import { defaultNoteSelect, listNotesInputSchema } from './note.select'
-
 export const noteRouter = router({
   listCreated: protectedProcedure
     .input(listNotesInputSchema)
@@ -165,6 +165,10 @@ export const noteRouter = router({
                 },
               },
             },
+            include: {
+              author: true,
+              recipient: true,
+            },
           })
         } else {
           // Perform create if id is undefined
@@ -179,12 +183,25 @@ export const noteRouter = router({
                 },
               },
             },
+            include: {
+              author: true,
+              recipient: true,
+            },
           })
         }
         await tx.user.update({
           where: { nric },
           data: { mobile },
         })
+        if (note.trigger === Trigger.IMMEDIATE && note.recipient.mobile) {
+          await sendMessage(
+            note.recipient.mobile,
+            note.recipient.name,
+            note.recipient.nric,
+            note.author.name,
+            note.author.nric,
+          )
+        }
         return note
       })
     }),
