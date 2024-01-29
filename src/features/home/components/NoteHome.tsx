@@ -7,15 +7,20 @@ import { NoteReceived } from '~/features/notes/components/NoteReceived'
 import { UnreadModal } from '~/features/notes/components/UnreadModal'
 import { trpc } from '~/utils/trpc'
 import { NoteTabs } from './NoteTabs'
+
+const MODAL_SHOWN_KEY = 'modalShown'
+
 export const NoteHome = (): JSX.Element => {
   const [tabNumber, setTabNumber] = useState(1)
   const [data] = trpc.note.listUnread.useSuspenseQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
   useEffect(() => {
-    if (data.items[0]) {
+    const modalShown = localStorage.getItem(MODAL_SHOWN_KEY) === 'true'
+    if (data.items[0] && !modalShown) {
       onOpen()
+      localStorage.setItem(MODAL_SHOWN_KEY, 'true')
     }
-  }, [data])
+  }, [data, onOpen])
   return (
     <Suspense fallback={<Skeleton width="100vw" height="100vh" />}>
       <Flex

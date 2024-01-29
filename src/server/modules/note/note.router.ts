@@ -267,7 +267,7 @@ export const noteRouter = router({
           message: `No note with id '${id}'`,
         })
       }
-      if (noteToUpdate?.authorId !== ctx.user.id) {
+      if (noteToUpdate?.recipient.nric !== ctx.user.nric) {
         throw new TRPCError({ code: 'FORBIDDEN' })
       }
       const note = await ctx.prisma.note.update({
