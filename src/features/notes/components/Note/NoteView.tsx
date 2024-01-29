@@ -22,7 +22,7 @@ import {
   BiTimeFive,
   BiTrash,
 } from 'react-icons/bi'
-import { type RouterOutput } from '~/utils/trpc'
+import { trpc, type RouterOutput } from '~/utils/trpc'
 import { DeleteNoteModal } from '../DeleteNoteModal'
 export interface NoteViewProps {
   note:
@@ -37,6 +37,12 @@ export const NoteView = ({
 }: NoteViewProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
+  const utils = trpc.useContext()
+  const readMutation = trpc.note.read.useMutation({
+    async onSuccess() {
+      await utils.note.invalidate()
+    },
+  })
   const handleMenuClick = (event: React.MouseEvent) => {
     event.stopPropagation()
   }
@@ -49,6 +55,11 @@ export const NoteView = ({
     event.stopPropagation()
     onOpen()
   }
+  const handleViewClick = async (event: React.MouseEvent) => {
+    event.stopPropagation()
+    readMutation.mutate({ id: note.id })
+    await router.push(`/note/${note.id}`)
+  }
   return (
     <Card
       display="flex"
@@ -58,7 +69,7 @@ export const NoteView = ({
       alignItems="flex-start"
       gap="0.75rem"
       alignSelf="stretch"
-      onClick={() => router.push(`/note/${note.id}`)}
+      onClick={handleViewClick}
       cursor="pointer"
     >
       <Box display="flex" width="full" alignItems="flex-start">

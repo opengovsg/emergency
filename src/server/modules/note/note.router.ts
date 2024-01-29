@@ -81,6 +81,29 @@ export const noteRouter = router({
         nextCursor,
       }
     }),
+  listUnread: protectedProcedure.query(async ({ ctx }) => {
+    const items = await ctx.prisma.note.findMany({
+      where: {
+        recipientNric: ctx.user.nric,
+        deletedAt: null,
+        isRead: false,
+        OR: [
+          {
+            trigger: Trigger.DEATH,
+            author: {
+              isDead: true,
+            },
+          },
+          {
+            trigger: Trigger.IMMEDIATE,
+          },
+        ],
+      },
+      select: defaultNoteSelect,
+      take: 1,
+    })
+    return { items }
+  }),
   byId: protectedProcedure
     .input(
       z.object({
@@ -134,6 +157,7 @@ export const noteRouter = router({
         mobile: note.recipient.mobile,
         id: note.id,
         isAuthor: ctx.session?.userId === note.authorId,
+        isRead: note.isRead,
       }
       return editedNote
     }),
@@ -225,6 +249,31 @@ export const noteRouter = router({
         where: { id },
         data: {
           deletedAt: new Date(),
+        },
+      })
+
+      return note
+    }),
+  read: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input: { id }, ctx }) => {
+      const noteToUpdate = await ctx.prisma.note.findUnique({
+        where: { id },
+        select: defaultNoteSelect,
+      })
+      if (!noteToUpdate) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: `No note with id '${id}'`,
+        })
+      }
+      if (noteToUpdate?.authorId !== ctx.user.id) {
+        throw new TRPCError({ code: 'FORBIDDEN' })
+      }
+      const note = await ctx.prisma.note.update({
+        where: { id },
+        data: {
+          isRead: true,
         },
       })
 

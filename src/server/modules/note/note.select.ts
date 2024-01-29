@@ -8,6 +8,7 @@ export const defaultNoteSelect = Prisma.validator<Prisma.NoteSelect>()({
   updatedAt: true,
   authorId: true,
   trigger: true,
+  isRead: true,
   author: {
     select: {
       nric: true,

@@ -1,13 +1,13 @@
 import {
+  Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  type ModalProps,
-  Text,
   Stack,
-  Modal,
+  Text,
+  type ModalProps,
 } from '@chakra-ui/react'
 import { Button, useToast } from '@opengovsg/design-system-react'
 import { ResponsiveButton } from '~/components/ResponsiveButton'

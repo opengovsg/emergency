@@ -1,13 +1,31 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Icon, Text } from '@chakra-ui/react'
+import { BiSolidCircle } from 'react-icons/bi'
 
 interface NoteTabsProps {
   tabNumber: number
   setTabNumber: (value: number) => void
+  hasUnread: boolean
 }
 
-export const NoteTabs = ({ tabNumber, setTabNumber }: NoteTabsProps) => {
+export const NoteTabs = ({
+  tabNumber,
+  setTabNumber,
+  hasUnread,
+}: NoteTabsProps) => {
   return (
-    <Flex alignItems="flex-start" width="full">
+    <Flex alignItems="flex-start" width="full" position="relative">
+      {hasUnread && (
+        <Icon
+          as={BiSolidCircle}
+          width="1rem"
+          height="1rem"
+          position="absolute"
+          right="-0.5rem"
+          top="-0.5rem"
+          color="utility.feedback.critical"
+        />
+      )}
+
       <Flex
         width="full"
         py="0.5rem"

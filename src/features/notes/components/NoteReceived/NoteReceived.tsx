@@ -1,9 +1,10 @@
 import { Divider, Stack, Text } from '@chakra-ui/react'
-import { NoteView } from '../Note'
 import Suspense from '~/components/Suspense'
-import { SkeletonNoteView } from '../Note/SkeletonNoteView'
 import { trpc } from '~/utils/trpc'
+import { NoteView } from '../Note'
+import { SkeletonNoteView } from '../Note/SkeletonNoteView'
 import { EmptyNoteReceived } from './EmptyNoteReceived'
+
 export const NoteReceived = () => {
   const [data] = trpc.note.listReceived.useSuspenseQuery({})
   if (data.items.length === 0) {
