@@ -11,10 +11,15 @@ generator client {
   previewFeatures = ["fullTextSearch"]
 }
 
+generator fieldEncryptionMigrations {
+  provider = "prisma-field-encryption"
+  output   = "./data-migrations"
+}
+
 model Note {
   id            String    @id @default(cuid())
-  content       String    @db.Text
-  contentHtml   String    @map("content_html") @db.Text
+  content       String    @db.Text /// @encrypted
+  contentHtml   String    @map("content_html") @db.Text /// @encrypted
   authorId      String    @map("author_id")
   author        User      @relation("AuthorRelation", fields: [authorId], references: [id], onDelete: Cascade)
   recipientNric String    @map("recipient_nric")

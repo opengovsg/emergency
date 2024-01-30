@@ -3,17 +3,21 @@
  * @link https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
  */
 import { PrismaClient } from '@prisma/client'
+import { fieldEncryptionExtension } from 'prisma-field-encryption'
 import { env } from '~/env.mjs'
+function getExtendedClient() {
+  return new PrismaClient({
+    log: env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+  }).$extends(fieldEncryptionExtension())
+}
+type ExtendedPrismaClient = ReturnType<typeof getExtendedClient>
 
 const prismaGlobal = global as typeof global & {
-  prisma?: PrismaClient
+  prisma?: ExtendedPrismaClient
 }
 
-export const prisma: PrismaClient =
-  prismaGlobal.prisma ||
-  new PrismaClient({
-    log: env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
-  })
+export const prisma: ExtendedPrismaClient =
+  prismaGlobal.prisma || getExtendedClient()
 
 if (env.NODE_ENV !== 'production') {
   prismaGlobal.prisma = prisma
