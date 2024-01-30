@@ -120,16 +120,19 @@ const TermsOfUsePage = (): JSX.Element => {
                     services, including the application (whether as software or
                     as a website or otherwise), its contents, push notifications
                     and all other accompanying materials as identified in the
-                    Schedule below (collectively, the "<b>Service</b>").
+                    Schedule below (collectively, the {'"'}
+                    <b>Service</b>
+                    {'"'}).
                   </SubSectionListItem>
                   <SubSectionListItem
                     prependSequenceMarker="1."
                     isNumericMarker
                   >
                     This Service is provided to you by the Government Technology
-                    Agency ("<b>GovTech</b>"). GovTech’s office is located at 10
-                    Pasir Panjang Road, #10-01, Mapletree Business City,
-                    Singapore 117438.
+                    Agency ({'"'}
+                    <b>GovTech</b>
+                    {'"'}). GovTech’s office is located at 10 Pasir Panjang
+                    Road, #10-01, Mapletree Business City, Singapore 117438.
                   </SubSectionListItem>
                   <SubSectionListItem
                     prependSequenceMarker="1."
@@ -175,10 +178,10 @@ const TermsOfUsePage = (): JSX.Element => {
                 </Text>
                 <Text textStyle="body-1">
                   The Service consists of work-in-progress hackathon projects
-                  for OGP's Hack for Public Good. The Services are in beta and
-                  made available only for trial and feedback purposes. None of
-                  the Services are for production use and, at GovTech’s sole and
-                  absolute discretion, may receive no or limited support.
+                  for {"OGP's"} Hack for Public Good. The Services are in beta
+                  and made available only for trial and feedback purposes. None
+                  of the Services are for production use and, at GovTech’s sole
+                  and absolute discretion, may receive no or limited support.
                   Certain functions may be disabled or simulated. You shall not
                   depend on any of the functions of any of the Services and,
                   without prejudice to GovTech’s other rights, GovTech disclaims
@@ -317,7 +320,8 @@ const TermsOfUsePage = (): JSX.Element => {
                     escalate privileged access, or remove restrictions to such
                     access, which are not intended by the manufacturer or
                     provider of your device or operating system of your device
-                    (e.g., "rooting" or "jailbreaking" your mobile phone).
+                    (e.g., {'"'}rooting{'"'} or {'"'}jailbreaking{'"'} your
+                    mobile phone).
                   </SubSectionListItem>
                 </SubSectionOrderedList>
               </SectionListItem>
@@ -329,22 +333,24 @@ const TermsOfUsePage = (): JSX.Element => {
                     isNumericMarker
                   >
                     The Service may require, enable or facilitate access to or
-                    use of software or services of a third party ("
+                    use of software or services of a third party ({'"'}
                     <b>Third Party</b>
-                    "). In such an event, there may be terms of use of the third
-                    party software or service (the "<b>Third Party Terms</b>").
-                    GovTech may be required under or as a result of the Third
-                    Party Terms to notify you of certain terms that apply to you
-                    (either directly as an end user, or as a party whose acts or
-                    omissions could cause GovTech to breach the Third Party
-                    Terms) when you use the Services. An example of Third Party
-                    Terms may be open source software terms or standard form
-                    terms of the distribution platform from which you obtain any
-                    part of the Service (e.g. Google Play Store or Apple App
-                    Store terms) which bind GovTech as a developer or user of
-                    the distribution platform (the "<b>Distribution Terms</b>").
-                    Information on the Third Party Terms are embedded in the
-                    Service, already accounted for in these Terms of Use,
+                    {'"'}). In such an event, there may be terms of use of the
+                    third party software or service (the {'"'}
+                    <b>Third Party Terms</b>
+                    {'"'}). GovTech may be required under or as a result of the
+                    Third Party Terms to notify you of certain terms that apply
+                    to you (either directly as an end user, or as a party whose
+                    acts or omissions could cause GovTech to breach the Third
+                    Party Terms) when you use the Services. An example of Third
+                    Party Terms may be open source software terms or standard
+                    form terms of the distribution platform from which you
+                    obtain any part of the Service (e.g. Google Play Store or
+                    Apple App Store terms) which bind GovTech as a developer or
+                    user of the distribution platform (the {'"'}
+                    <b>Distribution Terms</b>
+                    {'"'}). Information on the Third Party Terms are embedded in
+                    the Service, already accounted for in these Terms of Use,
                     publicly available (e.g the Distribution Terms) or otherwise
                     listed in the Schedule herein. For the avoidance of doubt,
                     insofar as this Clause 4 relates to the Distribution Terms,
@@ -412,15 +418,17 @@ const TermsOfUsePage = (): JSX.Element => {
                     (inclusive of terms which impose any minimum or maximum
                     standards herein, and/or terms described in Clause 4.5
                     below), such terms are deemed to have been so incorporated
-                    (the "<b>Incorporated Terms</b>"). Examples of Incorporated
-                    Terms include provisions which require GovTech to give you
-                    notice of certain rights and liabilities or require GovTech
-                    to ensure that you acknowledge certain matters. Similarly,
-                    if the Third Party Terms expressly or impliedly require
-                    these Terms of Use to be altered such that the Third Party
-                    Terms are complied with, the parties herein agree that the
-                    Terms of Use shall be deemed to be so altered but only to
-                    the extent necessary for compliance.
+                    (the {'"'}
+                    <b>Incorporated Terms</b>
+                    {'"'}). Examples of Incorporated Terms include provisions
+                    which require GovTech to give you notice of certain rights
+                    and liabilities or require GovTech to ensure that you
+                    acknowledge certain matters. Similarly, if the Third Party
+                    Terms expressly or impliedly require these Terms of Use to
+                    be altered such that the Third Party Terms are complied
+                    with, the parties herein agree that the Terms of Use shall
+                    be deemed to be so altered but only to the extent necessary
+                    for compliance.
                   </SubSectionListItem>
                   <SubSectionListItem
                     prependSequenceMarker="4."
@@ -489,20 +497,21 @@ const TermsOfUsePage = (): JSX.Element => {
                     If you receive information or data (in whatever form) from
                     GovTech or a Third Party which is designated confidential or
                     proprietary or is otherwise reasonably understood to be
-                    confidential or proprietary (collectively, "
-                    <b>Confidential Information</b>"), you shall not use,
-                    disclose or reproduce the Confidential Information except
-                    for the purpose for which it was provided to you. If consent
-                    to disclose the Confidential Information to a third party is
-                    given by GovTech or the Third Party to you, any act or
-                    omission in respect of the Confidential Information by that
-                    person shall be deemed to be your act or omission and you
-                    agree to be fully liable for the same. In all cases, you
-                    shall protect the Confidential Information to the same
-                    extent you protect your own confidential information but in
-                    no event less than a reasonable standard of care. You shall
-                    ensure that any recipients are bound by confidentiality
-                    terms at least as restrictive as this Clause.
+                    confidential or proprietary (collectively, {'"'}
+                    <b>Confidential Information</b>
+                    {'"'}), you shall not use, disclose or reproduce the
+                    Confidential Information except for the purpose for which it
+                    was provided to you. If consent to disclose the Confidential
+                    Information to a third party is given by GovTech or the
+                    Third Party to you, any act or omission in respect of the
+                    Confidential Information by that person shall be deemed to
+                    be your act or omission and you agree to be fully liable for
+                    the same. In all cases, you shall protect the Confidential
+                    Information to the same extent you protect your own
+                    confidential information but in no event less than a
+                    reasonable standard of care. You shall ensure that any
+                    recipients are bound by confidentiality terms at least as
+                    restrictive as this Clause.
                   </SubSectionListItem>
                   <SubSectionListItem
                     prependSequenceMarker="5B."
@@ -556,7 +565,8 @@ const TermsOfUsePage = (): JSX.Element => {
                     isNumericMarker
                   >
                     <b>
-                      The Service is provided on an "as is" and "as available"
+                      The Service is provided on an {'"'}as is{'"'} and {'"'}as
+                      available{'"'}
                       basis without warranties of any kind. To the fullest
                       extent permitted by law, GovTech does not make any
                       representations or warranties of any kind whatsoever in
@@ -887,11 +897,13 @@ const TermsOfUsePage = (): JSX.Element => {
                   >
                     GovTech may, at its sole discretion, refer any dispute
                     referred to in clause 11.2 above to arbitration administered
-                    by the Singapore International Arbitration Centre ("
-                    <b>SIAC</b>") in Singapore in accordance with the
-                    Arbitration Rules of the SIAC ("<b>SIAC Rules</b>") for the
-                    time being in force, which rules are deemed to be
-                    incorporated by reference in this clause. Further:
+                    by the Singapore International Arbitration Centre ({'"'}
+                    <b>SIAC</b>
+                    {'"'}) in Singapore in accordance with the Arbitration Rules
+                    of the SIAC ({'"'}
+                    <b>SIAC Rules</b>
+                    {'"'}) for the time being in force, which rules are deemed
+                    to be incorporated by reference in this clause. Further:
                     <SubSubSectionOrderedList mt="1.5rem">
                       <SubSectionListItem
                         prependSequenceMarker="11."

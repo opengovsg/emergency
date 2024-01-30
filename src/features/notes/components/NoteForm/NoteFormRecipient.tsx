@@ -51,7 +51,7 @@ export const NoteFormRecipient = ({
     if (value !== 'other') {
       // Update the form value for `nric`
       const user = me.children.find((child) => child.nric === value)
-      if (user) {
+      if (user && user.dob) {
         const age = calculateAge(new Date(user.dob))
         if (age.year < 15) {
           setHasSingpass(false)
