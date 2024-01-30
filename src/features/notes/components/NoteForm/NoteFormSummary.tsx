@@ -1,8 +1,8 @@
-import { Stack, Text, Button } from '@chakra-ui/react'
+import { Button, Stack, Text } from '@chakra-ui/react'
+import { Trigger } from '@prisma/client'
 import { type UseFormReturn } from 'react-hook-form'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
 import { FullNote } from '../Note/FullNote'
-import { Trigger } from '@prisma/client'
 interface NoteFormSummaryProps extends UseFormReturn<ClientAddNoteSchema> {
   handleSubmitNote: (e: React.BaseSyntheticEvent) => Promise<void>
   handleCancel: () => void
@@ -29,7 +29,7 @@ export const NoteFormSummary = ({
       alignSelf="stretch"
     >
       <Stack width="full" alignItems="flex-start" gap="1rem">
-        <Text textStyle="h6">Review your emergency note</Text>
+        <Text textStyle="h6">Review your note</Text>
         <Text textStyle="body-2">
           {formData.trigger === Trigger.DEATH
             ? DEATH_SUMMARY_HEADER

@@ -58,7 +58,7 @@ export const NoteFormRecipient = ({
       alignSelf="stretch"
     >
       <Stack width="full" alignItems="flex-start" gap="1rem">
-        <Text textStyle="h6">Who are you sending this emergency note to?</Text>
+        <Text textStyle="h6">Who are you sending this note to?</Text>
         <Text textStyle="body-2">
           Please choose the intended recipient for your note from the dropdown
           menu below to ensure it reaches the right person.
@@ -79,11 +79,11 @@ export const NoteFormRecipient = ({
                         value: child.nric,
                       }
                     }),
-                    { label: 'Other', value: 'other' },
+                    { label: 'Send to another recipient', value: 'other' },
                   ]}
                   onChange={handleSelectChange}
                   value={selectedOption}
-                  name="Recipient"
+                  name="Select your note recipient"
                 />
               </Box>
             </Stack>
@@ -146,7 +146,7 @@ export const NoteFormRecipient = ({
         </FormErrorMessage>
         <FormHelperText>
           <Text textStyle="legal">
-            Your recipient will receive a SMS when this eNote is delivered
+            Your recipient will receive a SMS when this note is delivered
           </Text>
         </FormHelperText>
       </FormControl>
