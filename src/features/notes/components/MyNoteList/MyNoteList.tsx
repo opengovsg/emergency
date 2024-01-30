@@ -19,7 +19,9 @@ export const MyNoteList = () => {
         alignSelf="stretch"
       >
         <Divider color="base.divider.subtle" />
-        <Text textStyle="caption-2">Your notes ({data.items.length})</Text>
+        <Text textStyle="caption-2">
+          Scheduled & Sent Notes ({data.items.length})
+        </Text>
         <Suspense fallback={<SkeletonNoteView />}>
           {data.items.map((note) => (
             <NoteView key={note.id} note={note} />

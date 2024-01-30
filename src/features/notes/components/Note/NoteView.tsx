@@ -71,6 +71,8 @@ export const NoteView = ({
       alignSelf="stretch"
       onClick={handleViewClick}
       cursor="pointer"
+      bgColor={isViewOnly && note.isRead ? 'base.canvas.brand-subtle' : ''}
+      opacity={isViewOnly && note.isRead ? '70%' : ''}
     >
       <Box display="flex" width="full" alignItems="flex-start">
         <Stack width="full" alignItems="flex-start" gap="0.5rem">

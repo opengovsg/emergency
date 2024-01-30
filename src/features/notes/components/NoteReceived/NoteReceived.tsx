@@ -1,4 +1,4 @@
-import { Divider, Stack } from '@chakra-ui/react'
+import { Divider, Stack, Text } from '@chakra-ui/react'
 import Suspense from '~/components/Suspense'
 import { trpc } from '~/utils/trpc'
 import { NoteView } from '../Note'
@@ -12,7 +12,10 @@ export const NoteReceived = () => {
   }
   return (
     <Stack w="full" alignItems="flex-start" gap="1rem">
-      <Divider />
+      <Stack alignItems="flex-start" gap="1rem" alignSelf="stretch">
+        <Divider />
+        <Text textStyle="caption-2">Received Notes ({data.items.length})</Text>
+      </Stack>
       <Suspense fallback={<SkeletonNoteView />}>
         {data.items.map((note) => (
           <NoteView key={note.id} note={note} isViewOnly={true} />

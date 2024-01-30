@@ -4,17 +4,17 @@ import { BiSolidCircle } from 'react-icons/bi'
 interface NoteTabsProps {
   tabNumber: number
   setTabNumber: (value: number) => void
-  hasUnread: boolean
+  numUnread: number
 }
 
 export const NoteTabs = ({
   tabNumber,
   setTabNumber,
-  hasUnread,
+  numUnread,
 }: NoteTabsProps) => {
   return (
     <Flex alignItems="flex-start" width="full" position="relative">
-      {hasUnread && (
+      {numUnread > 0 && (
         <Icon
           as={BiSolidCircle}
           width="1rem"
@@ -83,7 +83,7 @@ export const NoteTabs = ({
           }
           textStyle="subhead-2"
         >
-          Notes Received
+          Notes Received {numUnread > 0 && `(${numUnread})`}
         </Text>
       </Flex>
     </Flex>

@@ -60,6 +60,9 @@ export const noteRouter = router({
             },
           ],
         },
+        orderBy: {
+          isRead: 'asc',
+        },
         select: defaultNoteSelect,
         // get an extra item at the end which we'll use as next cursor
         take: limit + 1,
@@ -100,7 +103,6 @@ export const noteRouter = router({
         ],
       },
       select: defaultNoteSelect,
-      take: 1,
     })
     return { items }
   }),

@@ -34,7 +34,7 @@ export const NoteHome = (): JSX.Element => {
         <NoteTabs
           tabNumber={tabNumber}
           setTabNumber={setTabNumber}
-          hasUnread={data.items.length > 0}
+          numUnread={data.items.length}
         />
         {tabNumber === 1 ? (
           <>
