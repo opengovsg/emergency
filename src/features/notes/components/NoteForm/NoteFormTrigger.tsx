@@ -36,8 +36,7 @@ export const NoteFormTrigger = ({
       <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">When do you want to send your note?</Text>
         <Text textStyle="body-2">
-          Please select the moment your message will reach your emergency
-          contact.
+          Please select the moment your note will reach your emergency contact.
         </Text>
         <FormControl isRequired isInvalid={!!errors.trigger}>
           <Controller

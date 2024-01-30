@@ -76,7 +76,7 @@ export const NoteView = ({
         <Stack width="full" alignItems="flex-start" gap="0.5rem">
           <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
             <Text textColor="base.content.brand" textStyle="legal">
-              {isViewOnly ? 'Message Sender' : 'Message Recipient'}
+              {isViewOnly ? 'Note Sender' : 'Note Recipient'}
             </Text>
             <Text textStyle="subhead-1">
               {isViewOnly ? note.author.nric : note.recipient.nric}

@@ -20,12 +20,12 @@ import { AppGrid } from '~/templates/AppGrid'
 
 const accordionItems = [
   {
-    text: 'How does e-Notes ensure that my messages are delivered aftermy passing?',
+    text: 'How does e-Notes ensure that my notes are delivered aftermy passing?',
     panel:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea commodo consequat.',
   },
   {
-    text: 'What kind of messages can I send, and are there any restrictions?',
+    text: 'What kind of notes can I send, and are there any restrictions?',
     panel:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea commodo consequat.',
   },
@@ -35,7 +35,7 @@ const accordionItems = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea commodo consequat.',
   },
   {
-    text: 'Can I update or delete my messages after I’ve set it up?',
+    text: 'Can I update or delete my notes after I’ve set it up?',
     panel:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nostrud exercitation ullamco laborisnisi ut aliquip ex ea commodo consequat.',
   },
