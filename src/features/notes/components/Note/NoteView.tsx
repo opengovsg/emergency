@@ -76,7 +76,7 @@ export const NoteView = ({
     >
       <Box display="flex" width="full" alignItems="flex-start">
         <Stack width="full" alignItems="flex-start" gap="0.5rem">
-          <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
+          <Stack alignItems="flex-start" gap="0.125rem" alignSelf="stretch">
             <Text textColor="base.content.brand" textStyle="legal">
               {isViewOnly ? 'Note Sender' : 'Note Recipient'}
             </Text>
@@ -137,7 +137,7 @@ export const NoteView = ({
                 : 'interaction.sub.default'
             }
           >
-            {note.trigger === Trigger.DEATH ? 'Upon passing' : 'Immediate'}
+            {note.trigger === Trigger.DEATH ? 'Upon passing' : 'Sent'}
           </Text>
         </Flex>
       ) : null}
