@@ -41,7 +41,7 @@ export const NoteForm = ({ note }: NoteFormProps) => {
   const utils = trpc.useContext()
   const addNoteMutation = trpc.note.add.useMutation({
     async onSuccess() {
-      toast({ description: 'You have saved a new emergency note' })
+      toast({ description: 'You have saved a new note.' })
       reset()
       await utils.note.invalidate()
       await router.push('/home')
