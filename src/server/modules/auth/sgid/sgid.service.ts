@@ -1,5 +1,4 @@
-import { type PrismaClient } from '@prisma/client'
-
+import { type ExtendedPrismaClient } from '~/server/prisma'
 import { type SgidSessionProfile } from './sgid.utils'
 
 export const upsertSgidAccountAndUser = async ({
@@ -11,7 +10,7 @@ export const upsertSgidAccountAndUser = async ({
   sponsoredChildren,
   children,
 }: {
-  prisma: PrismaClient
+  prisma: ExtendedPrismaClient
   name: SgidSessionProfile['name']
   nric: SgidSessionProfile['nric']
   mobile: SgidSessionProfile['mobile']

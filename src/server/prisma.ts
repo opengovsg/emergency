@@ -10,7 +10,7 @@ function getExtendedClient() {
     log: env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
   }).$extends(fieldEncryptionExtension())
 }
-type ExtendedPrismaClient = ReturnType<typeof getExtendedClient>
+export type ExtendedPrismaClient = ReturnType<typeof getExtendedClient>
 
 const prismaGlobal = global as typeof global & {
   prisma?: ExtendedPrismaClient
