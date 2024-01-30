@@ -7,6 +7,7 @@ export const upsertSgidAccountAndUser = async ({
   name,
   nric,
   mobile,
+  dob,
   sponsoredChildren,
   children,
 }: {
@@ -14,6 +15,7 @@ export const upsertSgidAccountAndUser = async ({
   name: SgidSessionProfile['name']
   nric: SgidSessionProfile['nric']
   mobile: SgidSessionProfile['mobile']
+  dob: SgidSessionProfile['dob']
   sub: SgidSessionProfile['sub']
   sponsoredChildren?: SgidSessionProfile['sponsoredChildren']
   children?: SgidSessionProfile['children']
@@ -27,11 +29,13 @@ export const upsertSgidAccountAndUser = async ({
       update: {
         name,
         mobile,
+        dob: new Date(dob),
       },
       create: {
         name,
         nric,
         mobile,
+        dob: new Date(dob),
       },
     })
     if (sponsoredChildren) {
@@ -40,7 +44,12 @@ export const upsertSgidAccountAndUser = async ({
           await tx.user.upsert({
             where: { nric: child.nric },
             update: { name: child.name, parentNric: nric },
-            create: { name: child.name, nric: child.nric, parentNric: nric },
+            create: {
+              name: child.name,
+              nric: child.nric,
+              parentNric: nric,
+              dob: new Date(child.date_of_birth),
+            },
           })
         }),
       )
@@ -55,6 +64,7 @@ export const upsertSgidAccountAndUser = async ({
               name: child.name,
               nric: child.birth_cert_no,
               parentNric: nric,
+              dob: new Date(child.date_of_birth),
             },
           })
         }),

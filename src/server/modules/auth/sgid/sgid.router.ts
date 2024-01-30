@@ -124,6 +124,7 @@ export const sgidRouter = router({
         name: sgidUserInfo.data['myinfo.name'],
         nric: sgidUserInfo.data['myinfo.nric_number'],
         mobile: sgidUserInfo.data['myinfo.mobile_number'],
+        dob: sgidUserInfo.data['myinfo.date_of_birth'],
         children: sgidUserInfo.data['myinfo.children_birth_records'],
         sponsoredChildren:
           sgidUserInfo.data['myinfo.sponsored_children_records'],

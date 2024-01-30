@@ -4,11 +4,12 @@ import { z } from 'zod'
 import { sgid } from '~/lib/sgid'
 import { sgidFalsyValue } from '~/utils/schema'
 import { safeSchemaJsonParse } from '~/utils/zod'
+
 const childrenBirthRecordsSchema = z.array(
   z.object({
     birth_cert_no: z.string(),
     name: z.string().optional(),
-    date_of_birth: z.string().optional(),
+    date_of_birth: z.string().refine((val) => validator.isISO8601(val)),
     life_status: z.string().optional(),
   }),
 )
@@ -17,7 +18,7 @@ const sponsoredChildrenRecordsSchema = z.array(
   z.object({
     nric: z.string(),
     name: z.string().optional(),
-    date_of_birth: z.string().optional(),
+    date_of_birth: z.string().refine((val) => validator.isISO8601(val)),
     life_status: z.string().optional(),
   }),
 )
@@ -32,6 +33,9 @@ const expectedUserInfo = z.object({
         sgidFalsyValue.transform(() => undefined),
       ])
       .optional(),
+    'myinfo.date_of_birth': z
+      .string()
+      .refine((val) => validator.isISO8601(val)),
     'myinfo.nric_number': z.string().refine((val) => nric.validate(val)),
     'myinfo.children_birth_records': z
       .string()
@@ -71,6 +75,7 @@ export type SgidUserInfo = z.infer<typeof expectedUserInfo>
 export const sgidSessionProfileSchema = z.object({
   name: expectedUserInfo.shape.data.shape['myinfo.name'],
   nric: expectedUserInfo.shape.data.shape['myinfo.nric_number'],
+  dob: expectedUserInfo.shape.data.shape['myinfo.date_of_birth'],
   mobile: expectedUserInfo.shape.data.shape['myinfo.mobile_number'],
   children: childrenBirthRecordsSchema,
   sponsoredChildren: sponsoredChildrenRecordsSchema,

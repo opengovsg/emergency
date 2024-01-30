@@ -9,10 +9,16 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { PhoneNumberInput, SingleSelect } from '@opengovsg/design-system-react'
+import {
+  Infobox,
+  Link,
+  PhoneNumberInput,
+  SingleSelect,
+} from '@opengovsg/design-system-react'
 import { useState } from 'react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { useMe } from '~/features/me/api'
+import { calculateAge } from '~/utils/dates'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
 interface CreateNewNoteRecipientProps
   extends UseFormReturn<ClientAddNoteSchema> {
@@ -39,13 +45,23 @@ export const NoteFormRecipient = ({
   const [selectedOption, setSelectedOption] = useState(
     isSelected ? watchedNric : !!watchedNric ? 'other' : '',
   )
-
+  const [hasSingpass, setHasSingpass] = useState(true)
   const handleSelectChange = (value: string) => {
     setSelectedOption(value)
     if (value !== 'other') {
       // Update the form value for `nric`
+      const user = me.children.find((child) => child.nric === value)
+      if (user) {
+        const age = calculateAge(new Date(user.dob))
+        if (age.year < 15) {
+          setHasSingpass(false)
+        } else {
+          setHasSingpass(true)
+        }
+      }
       setValue('nric', value, { shouldValidate: true })
     } else {
+      setHasSingpass(true)
       setValue('nric', '')
     }
   }
@@ -84,9 +100,23 @@ export const NoteFormRecipient = ({
                   onChange={handleSelectChange}
                   value={selectedOption}
                   name="Select your note recipient"
+                  placeholder="Select your note recipient"
                 />
               </Box>
             </Stack>
+          )}
+          {!hasSingpass && (
+            <Infobox>
+              <Text>
+                Notes addressed to recipients without a Singpass account will be
+                securely held and delivered upon their Singpass registration.
+                Find out more{' '}
+                <Link isExternal={true} href="/">
+                  here
+                </Link>
+                .
+              </Text>
+            </Infobox>
           )}
           <Stack
             w="full"

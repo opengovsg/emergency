@@ -71,6 +71,7 @@
     "@types/validator": "^13.11.7",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "dayjs": "^1.11.10",
     "iron-session": "^8.0.1",
     "libphonenumber-js": "^1.10.54",
     "lodash": "^4.17.21",

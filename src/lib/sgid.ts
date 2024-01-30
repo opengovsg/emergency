@@ -10,6 +10,7 @@ export const APP_SGID_SCOPE = [
   'openid',
   'myinfo.name',
   'myinfo.nric_number',
+  'myinfo.date_of_birth',
   'myinfo.mobile_number',
   'myinfo.children_birth_records',
   'myinfo.sponsored_children_records',

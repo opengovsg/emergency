@@ -33,13 +33,14 @@ model Note {
 }
 
 model User {
-  id            String  @id @default(cuid())
-  nric          String  @unique
+  id            String   @id @default(cuid())
+  nric          String   @unique
   name          String?
+  dob           DateTime @db.Date
   mobile        String?
-  authoredNotes Note[]  @relation("AuthorRelation")
-  receivedNotes Note[]  @relation("RecipientRelation")
-  isDead        Boolean @default(false)
+  authoredNotes Note[]   @relation("AuthorRelation")
+  receivedNotes Note[]   @relation("RecipientRelation")
+  isDead        Boolean  @default(false)
 
   parentNric String? @map("parent_nric")
   parent     User?   @relation("UserChildren", fields: [parentNric], references: [nric])
