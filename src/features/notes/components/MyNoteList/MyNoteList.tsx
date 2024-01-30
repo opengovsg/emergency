@@ -15,11 +15,11 @@ export const MyNoteList = () => {
       <Flex
         flexDirection="column"
         alignItems="flex-start"
-        gap="0.5rem"
+        gap="1rem"
         alignSelf="stretch"
       >
-        <Text textStyle="caption-2">Your last notes ({data.items.length})</Text>
         <Divider color="base.divider.subtle" />
+        <Text textStyle="caption-2">Your notes ({data.items.length})</Text>
         <Suspense fallback={<SkeletonNoteView />}>
           {data.items.map((note) => (
             <NoteView key={note.id} note={note} />

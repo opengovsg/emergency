@@ -69,7 +69,7 @@ export const DeleteNoteModal = ({
               isLoading={deleteNoteMutation.isLoading}
               colorScheme="critical"
             >
-              Delete Note
+              Delete note
             </ResponsiveButton>
             <Button
               colorScheme="neutral"

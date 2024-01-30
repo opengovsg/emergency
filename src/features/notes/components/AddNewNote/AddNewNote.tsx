@@ -31,7 +31,7 @@ export const AddNewNote = () => {
           color="interaction.main-subtle.default"
         />
         <Text textStyle="subhead-1" textColor="base.content.inverse">
-          Write a new emergency note
+          Write a new note
         </Text>
       </Flex>
     </Flex>
