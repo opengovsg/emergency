@@ -1,9 +1,13 @@
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Stack,
+  Text,
+} from '@chakra-ui/react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { RichText } from '~/components/RichText'
-import { Stack, Text, Button } from '@chakra-ui/react'
-import { FormErrorMessage } from '@chakra-ui/react'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
-import { FormControl } from '@chakra-ui/react'
 interface NoteFormTextProps extends UseFormReturn<ClientAddNoteSchema> {
   handleNext: () => void
   handleCancel: () => void
@@ -53,7 +57,12 @@ export const NoteFormText = ({
         <FormErrorMessage>{errors.contentHtml?.message}</FormErrorMessage>
       </FormControl>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="full" alignItems="flex-start" onClick={handleNext}>
+        <Button
+          width="full"
+          alignItems="center"
+          onClick={handleNext}
+          height="3.5rem"
+        >
           Next
         </Button>
         <Button
@@ -62,6 +71,7 @@ export const NoteFormText = ({
           variant="clear"
           alignItems="center"
           onClick={handleCancel}
+          height="3.5rem"
         >
           Cancel
         </Button>

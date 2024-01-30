@@ -39,7 +39,7 @@ export const NoteForm = ({ note }: NoteFormProps) => {
     await router.push('/home')
   }
   const utils = trpc.useContext()
-  const addNoteMutation = trpc.note.add.useMutation({
+  const { mutate, isLoading } = trpc.note.add.useMutation({
     async onSuccess() {
       toast({ description: 'You have saved a new note.' })
       reset()
@@ -49,7 +49,7 @@ export const NoteForm = ({ note }: NoteFormProps) => {
   })
 
   const handleSubmitNote = handleSubmit(async (data) => {
-    return addNoteMutation.mutate(data)
+    return mutate(data)
   })
 
   const validateStep = async (step: number) => {
@@ -93,6 +93,7 @@ export const NoteForm = ({ note }: NoteFormProps) => {
         />
       ) : step === 4 ? (
         <NoteFormSummary
+          isLoading={isLoading}
           {...formMethods}
           handleSubmitNote={handleSubmitNote}
           handleCancel={handleCancel}

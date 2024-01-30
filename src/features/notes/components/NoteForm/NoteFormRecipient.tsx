@@ -45,7 +45,18 @@ export const NoteFormRecipient = ({
   const [selectedOption, setSelectedOption] = useState(
     isSelected ? watchedNric : !!watchedNric ? 'other' : '',
   )
-  const [hasSingpass, setHasSingpass] = useState(true)
+  const [hasSingpass, setHasSingpass] = useState(() => {
+    const user = me.children.find((child) => child.nric === selectedOption)
+    if (user && user.dob) {
+      const age = calculateAge(new Date(user.dob))
+      if (age.year < 15) {
+        return false
+      } else {
+        return true
+      }
+    }
+    return true
+  })
   const handleSelectChange = (value: string) => {
     setSelectedOption(value)
     if (value !== 'other') {
@@ -76,112 +87,121 @@ export const NoteFormRecipient = ({
       <Stack width="full" alignItems="flex-start" gap="1rem">
         <Text textStyle="h6">Who are you sending this note to?</Text>
         <Text textStyle="body-2">
-          Please choose the intended recipient for your note from the dropdown
-          menu below to ensure it reaches the right person.
+          Please enter the intended recipient{"'"}s details carefully below to
+          ensure your note reaches the right person.
         </Text>
       </Stack>
-      <FormControl isRequired isInvalid={!!errors.nric}>
-        <Stack w="full" gap="1rem">
-          {hasChildren && (
-            <Stack width="full" alignItems="flex-start" gap="0.5rem">
-              <FormLabel>Note recipient</FormLabel>
-              <Box width="full">
-                <SingleSelect
-                  isClearable={false}
-                  items={[
-                    ...me.children.map((child) => {
-                      return {
-                        label: `${child.nric} - ${child.name}`,
-                        value: child.nric,
-                      }
-                    }),
-                    { label: 'Send to another recipient', value: 'other' },
-                  ]}
-                  onChange={handleSelectChange}
-                  value={selectedOption}
-                  name="Select your note recipient"
-                  placeholder="Select your note recipient"
-                />
-              </Box>
-            </Stack>
-          )}
-          {!hasSingpass && (
-            <Infobox>
-              <Text>
-                Notes addressed to recipients without a Singpass account will be
-                securely held and delivered upon their Singpass registration.
-                Find out more{' '}
-                <Link isExternal={true} href="/">
-                  here
-                </Link>
-                .
-              </Text>
-            </Infobox>
-          )}
-          <Stack
-            w="full"
-            gap="0.5rem"
-            alignSelf="stretch"
-            alignItems="flex-start"
-          >
-            {(selectedOption === 'other' || !hasChildren) && (
-              <>
-                <FormLabel margin="0" textStyle="subhead-2">
-                  NRIC / FIN number
-                </FormLabel>
-                <Controller
-                  name="nric"
-                  control={control}
-                  render={({ field: { onChange, value, ref } }) => (
-                    <>
-                      <Input
-                        id="nricInput"
-                        isRequired
-                        placeholder="Enter the recipient's NRIC"
-                        onChange={onChange}
-                        onBlur={() => trigger('nric')}
-                        value={value}
-                        ref={ref}
-                      />
-                      <FormErrorMessage>
-                        {errors.nric && errors.nric.message}
-                      </FormErrorMessage>
-                    </>
-                  )}
-                />
-              </>
+      <Stack w="full" gap="1rem">
+        <FormControl isRequired isInvalid={!!errors.nric}>
+          <Stack gap="1rem">
+            {hasChildren && (
+              <Stack width="full" alignItems="flex-start" gap="0.5rem">
+                <FormLabel mb="0rem">Note recipient</FormLabel>
+                <Box width="full">
+                  <SingleSelect
+                    isClearable={false}
+                    items={[
+                      ...me.children.map((child) => {
+                        return {
+                          label: `${child.nric} - ${child.name}`,
+                          value: child.nric,
+                        }
+                      }),
+                      { label: 'Send to another recipient', value: 'other' },
+                    ]}
+                    onChange={handleSelectChange}
+                    value={selectedOption}
+                    name="Select your note recipient"
+                    placeholder="Select your note recipient"
+                  />
+                </Box>
+                {!hasSingpass && (
+                  <Infobox variant="warning">
+                    <Text>
+                      Notes addressed to recipients without a Singpass account
+                      will be securely held and delivered upon their Singpass
+                      registration. Find out more{' '}
+                      <Link isExternal={true} href="/">
+                        here
+                      </Link>
+                      .
+                    </Text>
+                  </Infobox>
+                )}
+              </Stack>
             )}
+
+            <Stack
+              w="full"
+              gap="0.5rem"
+              alignSelf="stretch"
+              alignItems="flex-start"
+            >
+              {(selectedOption === 'other' || !hasChildren) && (
+                <>
+                  <FormLabel margin="0" textStyle="subhead-2">
+                    NRIC / FIN number
+                  </FormLabel>
+                  <Controller
+                    name="nric"
+                    control={control}
+                    render={({ field: { onChange, value, ref } }) => (
+                      <>
+                        <Input
+                          id="nricInput"
+                          isRequired
+                          placeholder="Enter the recipient's NRIC"
+                          onChange={onChange}
+                          onBlur={() => trigger('nric')}
+                          value={value}
+                          ref={ref}
+                        />
+                        <FormErrorMessage m="0rem">
+                          {errors.nric && errors.nric.message}
+                        </FormErrorMessage>
+                      </>
+                    )}
+                  />
+                </>
+              )}
+            </Stack>
           </Stack>
-        </Stack>
-      </FormControl>
-      <FormControl isRequired isInvalid={!!errors.mobile}>
-        <FormLabel>Mobile number</FormLabel>
-        <Controller
-          name="mobile"
-          render={({ field: { onChange, value, ref } }) => (
-            <PhoneNumberInput
-              onBlur={() => trigger('mobile')}
-              mb="0.5rem"
-              allowInternational={false}
-              defaultCountry="SG"
-              onChange={onChange}
-              value={value}
-              ref={ref}
-            />
-          )}
-          control={control}
-        />
-        <FormErrorMessage>
-          {errors.mobile && errors.mobile.message}
-        </FormErrorMessage>
-        <FormHelperText>
-          <Text textStyle="legal">
-            Your recipient will receive a SMS when this note is delivered
-          </Text>
-        </FormHelperText>
-      </FormControl>
+        </FormControl>
+        <FormControl isRequired isInvalid={!!errors.mobile}>
+          <FormLabel mb="0rem">Mobile number</FormLabel>
+          <FormHelperText mb="0.5rem">
+            <Text textStyle="body-2">
+              Your recipient will receive a SMS when this note is delivered
+            </Text>
+          </FormHelperText>
+          <Controller
+            name="mobile"
+            render={({ field: { onChange, value, ref } }) => (
+              <PhoneNumberInput
+                onBlur={() => trigger('mobile')}
+                mb="0.5rem"
+                allowInternational={false}
+                defaultCountry="SG"
+                onChange={onChange}
+                value={value}
+                ref={ref}
+              />
+            )}
+            control={control}
+          />
+          <FormErrorMessage m="0rem">
+            {errors.mobile && errors.mobile.message}
+          </FormErrorMessage>
+        </FormControl>
+      </Stack>
+
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="full" alignItems="flex-start" onClick={handleNext}>
+        <Button
+          width="full"
+          alignItems="center"
+          onClick={handleNext}
+          height="3.5rem"
+        >
           Next
         </Button>
         <Button
@@ -190,6 +210,7 @@ export const NoteFormRecipient = ({
           variant="clear"
           alignItems="center"
           onClick={handleCancel}
+          height="3.5rem"
         >
           Cancel
         </Button>

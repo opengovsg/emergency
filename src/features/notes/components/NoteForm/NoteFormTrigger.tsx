@@ -1,4 +1,5 @@
 import {
+  Button,
   FormControl,
   FormErrorMessage,
   Radio,
@@ -6,11 +7,9 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
-import React from 'react'
+import { Trigger } from '@prisma/client'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
-import { Trigger } from '@prisma/client'
 interface NoteFormTriggerProps extends UseFormReturn<ClientAddNoteSchema> {
   handleNext: () => void
   handleCancel: () => void
@@ -68,7 +67,12 @@ export const NoteFormTrigger = ({
         </FormControl>
       </Stack>
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="full" alignItems="flex-start" onClick={handleNext}>
+        <Button
+          width="full"
+          alignItems="center"
+          onClick={handleNext}
+          height="3.5rem"
+        >
           Next
         </Button>
         <Button
@@ -77,6 +81,7 @@ export const NoteFormTrigger = ({
           variant="clear"
           alignItems="center"
           onClick={handleCancel}
+          height="3.5rem"
         >
           Cancel
         </Button>

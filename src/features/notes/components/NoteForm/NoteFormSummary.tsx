@@ -1,4 +1,5 @@
-import { Button, Stack, Text } from '@chakra-ui/react'
+import { Stack, Text } from '@chakra-ui/react'
+import { Button } from '@opengovsg/design-system-react'
 import { Trigger } from '@prisma/client'
 import { type UseFormReturn } from 'react-hook-form'
 import { type ClientAddNoteSchema } from '../../schemas/addNoteSchema'
@@ -6,6 +7,7 @@ import { FullNote } from '../Note/FullNote'
 interface NoteFormSummaryProps extends UseFormReturn<ClientAddNoteSchema> {
   handleSubmitNote: (e: React.BaseSyntheticEvent) => Promise<void>
   handleCancel: () => void
+  isLoading: boolean
 }
 
 const IMMEDIATE_SUMMARY_HEADER =
@@ -16,6 +18,7 @@ const DEATH_SUMMARY_HEADER =
 export const NoteFormSummary = ({
   handleSubmitNote,
   handleCancel,
+  isLoading,
   ...props
 }: NoteFormSummaryProps) => {
   const { watch } = props
@@ -46,7 +49,13 @@ export const NoteFormSummary = ({
         mobile={formData.mobile}
       />
       <Stack alignItems="center" gap="0.5rem" alignSelf="stretch">
-        <Button width="full" alignItems="flex-start" onClick={handleSubmitNote}>
+        <Button
+          width="full"
+          alignItems="center"
+          onClick={handleSubmitNote}
+          isLoading={isLoading}
+          height="3.5rem"
+        >
           <Text textStyle="subhead-2">
             {formData.trigger === Trigger.DEATH
               ? 'Save and schedule note'
@@ -59,6 +68,8 @@ export const NoteFormSummary = ({
           variant="clear"
           alignItems="center"
           onClick={handleCancel}
+          isDisabled={isLoading}
+          height="3.5rem"
         >
           <Text textStyle="subhead-2">Cancel</Text>
         </Button>
