@@ -1,14 +1,14 @@
 import {
-  Stack,
-  Text,
-  Card,
   Box,
+  Card,
+  IconButton,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  IconButton,
+  MenuList,
   Skeleton,
+  Stack,
+  Text,
 } from '@chakra-ui/react'
 
 import { BiDotsHorizontalRounded, BiPencil, BiTrash } from 'react-icons/bi'
@@ -28,7 +28,7 @@ export const SkeletonNoteView = (): JSX.Element => {
           <Stack alignItems="flex-start" gap="0.25rem" alignSelf="stretch">
             <Skeleton>
               <Text textColor="base.content.brand" textStyle="legal">
-                Message Recipient
+                Note Recipient
               </Text>
             </Skeleton>
             <Skeleton>

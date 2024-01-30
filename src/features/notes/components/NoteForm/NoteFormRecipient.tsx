@@ -68,7 +68,7 @@ export const NoteFormRecipient = ({
         <Stack w="full" gap="1rem">
           {hasChildren && (
             <Stack width="full" alignItems="flex-start" gap="0.5rem">
-              <FormLabel>Message recipient</FormLabel>
+              <FormLabel>Note recipient</FormLabel>
               <Box width="full">
                 <SingleSelect
                   isClearable={false}

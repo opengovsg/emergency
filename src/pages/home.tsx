@@ -1,15 +1,16 @@
 import { Flex, Stack } from '@chakra-ui/react'
+import { RestrictedFooter } from '@opengovsg/design-system-react'
+import { FOOTER_LINKS } from '~/constants/footer'
 import {
   ADMIN_NAVBAR_HEIGHT,
   APP_GRID_COLUMN,
   APP_GRID_TEMPLATE_COLUMN,
 } from '~/constants/layouts'
-import { NoteHome } from '~/features/home/components/NoteHome'
 import { DefaultBanner } from '~/features/home/components/DefaultBanner'
+import { NoteHome } from '~/features/home/components/NoteHome'
 import { type NextPageWithLayout } from '~/lib/types'
 import { AppGrid } from '~/templates/AppGrid'
 import { AdminLayout } from '~/templates/layouts/AdminLayout'
-import { RestrictedFooter } from '@opengovsg/design-system-react'
 const Home: NextPageWithLayout = () => {
   return (
     <Flex
@@ -36,7 +37,11 @@ const Home: NextPageWithLayout = () => {
           <NoteHome />
         </Stack>
       </AppGrid>
-      <RestrictedFooter appLink="" appName="" />
+      <RestrictedFooter
+        appLink=""
+        appName="eNotes"
+        footerLinks={FOOTER_LINKS}
+      />
     </Flex>
   )
 }

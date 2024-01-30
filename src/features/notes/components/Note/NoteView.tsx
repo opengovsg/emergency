@@ -140,7 +140,12 @@ export const NoteView = ({
         </Flex>
       ) : null}
 
-      <DeleteNoteModal isOpen={isOpen} onClose={onClose} id={note.id} />
+      <DeleteNoteModal
+        isOpen={isOpen}
+        onClose={onClose}
+        id={note.id}
+        trigger={note.trigger}
+      />
     </Card>
   )
 }

@@ -4,7 +4,8 @@ import { useFeatureValue } from '~/lib/growthbook/client'
 
 export const AppBanner = () => {
   const bannerFeature = useFeatureValue('banner', {
-    message: "eNotes is a pilot project from OGP's HFPG 2024 hackathon.",
+    message:
+      'eNotes is a work-in-progress Hackathon project for OGP’s Hack for Public Good.',
     variant: 'info',
   })
 

@@ -1,4 +1,4 @@
-import { Divider, Flex, Icon, Text } from '@chakra-ui/react'
+import { Flex, Icon, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { BiPlusCircle } from 'react-icons/bi'
 
@@ -11,14 +11,6 @@ export const AddNewNote = () => {
       alignItems="flex-start"
       gap="1rem"
     >
-      <Flex
-        flexDirection="column"
-        alignItems="flex-start"
-        alignSelf="stretch"
-        gap="0.5rem"
-      >
-        <Divider color="base.divider.medium" />
-      </Flex>
       <Flex
         height="5rem"
         padding="1rem"

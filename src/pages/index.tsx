@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { RestrictedFooter } from '@opengovsg/design-system-react'
+import { FOOTER_LINKS } from '~/constants/footer'
 import { AppPublicHeader, LandingSection } from '~/features/landing/components'
 import {
   SgidLoginButton,
@@ -92,6 +93,7 @@ const LandingPage = () => {
             }}
             appName="eNotes"
             appLink="/"
+            footerLinks={FOOTER_LINKS}
           />
         </Box>
       </AppGrid>

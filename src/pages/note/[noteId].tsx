@@ -73,7 +73,12 @@ const NotePage: NextPageWithLayout = () => {
               </Stack>
             ) : null}
           </Stack>
-          <DeleteNoteModal isOpen={isOpen} onClose={onClose} id={noteId} />
+          <DeleteNoteModal
+            isOpen={isOpen}
+            onClose={onClose}
+            id={noteId}
+            trigger={data.trigger}
+          />
         </AppGrid>
         <RestrictedFooter appLink="" appName="" />
       </Flex>

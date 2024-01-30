@@ -36,26 +36,33 @@ export const FullNote = ({
         <Flex justifyContent="space-between" alignItems="flex-end" width="full">
           <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
             <Text textColor="base.content.brand" textStyle="legal">
-              {isAuthor ? 'Message Recipient' : 'Message Sender'}
+              {isAuthor ? 'Note Recipient' : 'Note Sender'}
             </Text>
             <Text textStyle="subhead-1">{nric}</Text>
           </Stack>
         </Flex>
-        <Flex justifyContent="space-between" alignItems="flex-end" width="full">
-          <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
-            <Text textColor="base.content.brand" textStyle="legal">
-              Mobile number
-            </Text>
-            <Text textStyle="subhead-1">{mobile}</Text>
-          </Stack>
-        </Flex>
+        {isAuthor && (
+          <Flex
+            justifyContent="space-between"
+            alignItems="flex-end"
+            width="full"
+          >
+            <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
+              <Text textColor="base.content.brand" textStyle="legal">
+                Mobile number
+              </Text>
+              <Text textStyle="subhead-1">{mobile}</Text>
+            </Stack>
+          </Flex>
+        )}
+
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Stack alignItems="flex-start" gap="0.25rem" flexShrink="0">
             <Text textColor="base.content.brand" textStyle="legal">
               Time of Delivery
             </Text>
             <Text textStyle="subhead-1">
-              {trigger === Trigger.DEATH ? 'Upon my passing' : 'Immediately'}
+              {trigger === Trigger.DEATH ? 'Upon my passing' : 'Immediate'}
             </Text>
           </Stack>
         </Flex>
