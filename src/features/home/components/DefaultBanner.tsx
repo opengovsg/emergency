@@ -14,7 +14,7 @@ export const DefaultBanner = () => {
     >
       <Text textStyle="banner">Good afternoon, {me.name}</Text>
       <Image
-        src="/assets/banner.svg"
+        src="/assets/Webapp-Graphic.svg"
         alt="banner"
         width={154}
         height={80}

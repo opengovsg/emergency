@@ -49,7 +49,7 @@ const NavbarMenu = () => {
               <Menu.Item
                 as="a"
                 href={link.href}
-                key="link.label"
+                key={link.label}
                 textStyle="body-1"
               >
                 {link.label}
