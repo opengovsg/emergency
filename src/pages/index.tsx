@@ -110,7 +110,7 @@ const LandingPage = () => {
           />
         </SimpleGrid>
       </LandingSection>
-      <Box bgGradient="linear(78deg, #9DCBEC 4.62%, #FAFBFC 89.25%)">
+      <Box bgGradient="linear(287deg, #DDEDFF 9.92%, #FAFBFC 91.71%)">
         <LandingSection p="4.5rem 9.25rem 6 rem 9.25rem">
           <Stack
             direction={{ base: 'column-reverse', lg: 'row' }}
@@ -160,11 +160,7 @@ const LandingPage = () => {
               </Stack>
             </Flex>
             <Flex flex={1} aria-hidden justify="right">
-              <Image
-                src="/assets/iPhone 15 1.svg"
-                alt="Hero"
-                width={isMobile ? '7rem' : '18.5rem'}
-              />
+              <Image src="/assets/Steps-Image.svg" alt="Hero" />
             </Flex>
           </Stack>
         </LandingSection>
@@ -212,7 +208,6 @@ const LandingPage = () => {
               ))}
             </Accordion>
             <Flex
-              px="1rem"
               justify="center"
               alignItems="flex-start"
               gap="0.5rem"
