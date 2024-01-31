@@ -30,22 +30,8 @@ export const FeatureGridItem = ({
           {title}
         </Text>
       </Flex>
-      <Text
-        fontSize="1.125rem"
-        fontWeight="400"
-        lineHeight="1.6875rem"
-        color="base.content.default"
-      >
-        {description1}
-      </Text>
-      <Text
-        fontSize="1.125rem"
-        fontWeight="400"
-        lineHeight="1.6875rem"
-        color="base.content.default"
-      >
-        {description2}
-      </Text>
+      <Text textStyle="body-1">{description1}</Text>
+      <Text textStyle="body-1">{description2}</Text>
     </Card>
   )
 }
