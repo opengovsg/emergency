@@ -25,13 +25,14 @@ export const SgidLoginButton = (): JSX.Element | null => {
     <>
       <Stack gap="0.75rem">
         <Button
-          colorScheme="neutral"
+          colorScheme="critical"
           bgColor="#F4333D"
           height="3.25rem"
           size="xs"
           borderRadius="0.5rem"
           variant="outline"
           borderColor="#F4333D"
+          _hover={{ bgColor: '#DA040F' }}
           isLoading={sgidLoginMutation.isLoading}
           onClick={handleSgidLogin}
           aria-label="Log in with Singpass app"
@@ -47,7 +48,7 @@ export const SgidLoginButton = (): JSX.Element | null => {
             </Text>
             {/* Negative margin so the svg sits on the same line as the text */}
             <Box mb="-3px">
-              <SingpassFullLogo color="#FFFFFF" height="1rem" />
+              <SingpassFullLogo color="#FFFFFF" height="1.4rem" />
             </Box>
           </Flex>
         </Button>
