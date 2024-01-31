@@ -9,16 +9,16 @@ const LINKS = [
     href: '/faq',
   },
   {
+    label: 'Privacy',
+    href: '/privacy',
+  },
+  {
     label: 'Terms of Use',
     href: '/terms',
   },
   {
     label: 'Report Vulnerability',
     href: 'https://www.tech.gov.sg/report_vulnerability',
-  },
-  {
-    label: 'Contact Us',
-    href: '/contact',
   },
 ]
 

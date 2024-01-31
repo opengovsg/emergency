@@ -216,7 +216,7 @@ const LandingPage = () => {
               ))}
             </Accordion>
             <Flex
-              justify="center"
+              justify="start"
               alignItems="flex-start"
               gap="0.5rem"
               alignSelf="stretch"
