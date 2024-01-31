@@ -1,10 +1,17 @@
 import { Divider, Flex, Text } from '@chakra-ui/react'
-import { trpc } from '~/utils/trpc'
-import { NoteView } from '../Note'
 import Suspense from '~/components/Suspense'
+import { type RouterOutput } from '~/utils/trpc'
+import { NoteView } from '../Note'
 import { SkeletonNoteView } from '../Note/SkeletonNoteView'
-export const MyNoteList = () => {
-  const [data] = trpc.note.listCreated.useSuspenseQuery({})
+import { EmptyMyNoteList } from './EmptyMyNoteList'
+interface MyNoteListProps {
+  createdNotes: RouterOutput['note']['listCreated']
+}
+
+export const MyNoteList = ({ createdNotes }: MyNoteListProps) => {
+  if (createdNotes.items.length == 0) {
+    return <EmptyMyNoteList />
+  }
   return (
     <Flex
       width="full"
@@ -20,10 +27,10 @@ export const MyNoteList = () => {
       >
         <Divider color="base.divider.subtle" />
         <Text textStyle="caption-2">
-          Scheduled & Sent Notes ({data.items.length})
+          Scheduled & Sent Notes ({createdNotes.items.length})
         </Text>
         <Suspense fallback={<SkeletonNoteView />}>
-          {data.items.map((note) => (
+          {createdNotes.items.map((note) => (
             <NoteView key={note.id} note={note} />
           ))}
         </Suspense>

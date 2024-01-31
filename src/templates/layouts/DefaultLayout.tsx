@@ -11,7 +11,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     <>
       <Head>
         <title>{env.NEXT_PUBLIC_APP_NAME}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Favicon.svg" />
       </Head>
 
       <main>{children}</main>

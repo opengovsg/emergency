@@ -1,4 +1,4 @@
-import { Flex, type As } from '@chakra-ui/react'
+import { Flex, Text, type As } from '@chakra-ui/react'
 import Image from 'next/image'
 import { AppGrid } from '~/templates/AppGrid'
 
@@ -57,11 +57,40 @@ export const AppPublicHeader = ({}: AppPublicHeaderProps): JSX.Element => {
     <AppGrid px="1.5rem" bg="white">
       <Flex
         gridColumn={{ base: '1 / -1', md: '2 / 12' }}
-        justify="center"
+        justify="space-between"
         align="center"
         py={{ base: '0.625rem', md: '4.5rem' }}
       >
-        <Image src="/assets/banner.svg" width={360} height={225} alt="Banner" />
+        <Flex alignItems="flex-end" gap="0.75rem">
+          <Image
+            src="/assets/Logo.svg"
+            width={36}
+            height={36}
+            alt="Logo small"
+          />
+          <Text
+            fontSize="1.5rem"
+            fontWeight="500"
+            lineHeight="2.1rem"
+            color="blue.700"
+          >
+            eNotes
+          </Text>
+        </Flex>
+        <Flex alignItems="center" gap="1.5rem" textStyle="body-1">
+          <Text as="a" href="/">
+            FAQ
+          </Text>
+          <Text as="a" href="/terms">
+            Terms of Use
+          </Text>
+          <Text as="a" href="/report">
+            Report Vulnerability
+          </Text>
+          <Text as="a" href="/contact">
+            Contact Us
+          </Text>
+        </Flex>
       </Flex>
     </AppGrid>
   )

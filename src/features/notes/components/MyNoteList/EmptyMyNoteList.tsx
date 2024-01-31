@@ -1,12 +1,12 @@
 import { Stack, Text } from '@chakra-ui/react'
 
-export const EmptyNoteReceived = () => {
+export const EmptyMyNoteList = () => {
   return (
     <Stack>
       <Stack gap="0.25rem" justifyContent="center" alignItems="center">
+        <Text textStyle="subhead-1">No notes written ... yet</Text>
         <Text textStyle="body-2">
-          Currently, there are no notes available in your account. Please check
-          back later or contact us if you believe this is an error.
+          Start writing a note and send it to your loved ones today
         </Text>
       </Stack>
     </Stack>

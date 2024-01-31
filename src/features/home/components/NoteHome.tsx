@@ -12,17 +12,18 @@ const MODAL_SHOWN_KEY = 'modalShown'
 
 export const NoteHome = (): JSX.Element => {
   const [tabNumber, setTabNumber] = useState(1)
-  const [data] = trpc.note.listUnread.useSuspenseQuery()
+  const [unreadNotes] = trpc.note.listUnread.useSuspenseQuery()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [createdNotes] = trpc.note.listCreated.useSuspenseQuery({})
   useEffect(() => {
     const modalShown = localStorage.getItem(MODAL_SHOWN_KEY) === 'true'
-    if (data.items[0] && !modalShown) {
+    if (unreadNotes.items[0] && !modalShown) {
       onOpen()
       localStorage.setItem(MODAL_SHOWN_KEY, 'true')
     }
-  }, [data, onOpen])
+  }, [unreadNotes, onOpen])
   return (
-    <Suspense fallback={<Skeleton width="100vw" height="100vh" />}>
+    <Suspense fallback={<Skeleton height="100vh" />}>
       <Flex
         padding="2rem 0rem"
         flexDirection="column"
@@ -34,19 +35,31 @@ export const NoteHome = (): JSX.Element => {
         <NoteTabs
           tabNumber={tabNumber}
           setTabNumber={setTabNumber}
-          numUnread={data.items.length}
+          numUnread={unreadNotes.items.length}
         />
         {tabNumber === 1 ? (
-          <>
+          <Flex
+            flexDirection={
+              createdNotes.items.length == 0 ? 'column-reverse' : 'column'
+            }
+            alignItems="center"
+            gap="1.5rem"
+            justifyContent="center"
+            width="full"
+          >
             <AddNewNote />
-            <MyNoteList />
-          </>
+            <MyNoteList createdNotes={createdNotes} />
+          </Flex>
         ) : (
           <NoteReceived />
         )}
       </Flex>
-      {data.items[0] && (
-        <UnreadModal isOpen={isOpen} onClose={onClose} note={data.items[0]} />
+      {unreadNotes.items[0] && (
+        <UnreadModal
+          isOpen={isOpen}
+          onClose={onClose}
+          note={unreadNotes.items[0]}
+        />
       )}
     </Suspense>
   )

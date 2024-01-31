@@ -13,6 +13,6 @@ export const FOOTER_LINKS = [
   },
   {
     label: 'Report Vulnerability',
-    href: '/',
+    href: 'https://www.tech.gov.sg/report_vulnerability',
   },
 ]

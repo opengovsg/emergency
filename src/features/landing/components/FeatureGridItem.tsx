@@ -1,25 +1,51 @@
-import { Image, Stack, Text } from '@chakra-ui/react'
+import { Card, Flex, Icon, Text } from '@chakra-ui/react'
+import { type IconType } from 'react-icons'
 
 interface FeatureGridItemProps {
-  image?: string
+  icon?: IconType
   title: string
-  description: string
+  description1: string
+  description2: string
 }
 
 export const FeatureGridItem = ({
-  image,
+  icon,
   title,
-  description,
+  description1,
+  description2,
 }: FeatureGridItemProps): JSX.Element => {
   return (
-    <Stack spacing="1rem">
-      {image && <Image maxW="3rem" src={image} aria-hidden alt={description} />}
-      <Text as="h4" textStyle="h4" color="base.content.strong">
-        {title}
+    <Card gap="2rem" p="2rem" alignItems="flex-start">
+      <Flex gap="0.5rem" alignItems="center">
+        {icon && (
+          <Icon
+            width="1.5rem"
+            height="1.5rem"
+            as={icon}
+            aria-hidden
+            color="base.content.brand"
+          />
+        )}
+        <Text as="h5" textStyle="h5" color="base.content.strong">
+          {title}
+        </Text>
+      </Flex>
+      <Text
+        fontSize="1.125rem"
+        fontWeight="400"
+        lineHeight="1.6875rem"
+        color="base.content.default"
+      >
+        {description1}
       </Text>
-      <Text textStyle="body-1" color="base.content.default">
-        {description}
+      <Text
+        fontSize="1.125rem"
+        fontWeight="400"
+        lineHeight="1.6875rem"
+        color="base.content.default"
+      >
+        {description2}
       </Text>
-    </Stack>
+    </Card>
   )
 }
