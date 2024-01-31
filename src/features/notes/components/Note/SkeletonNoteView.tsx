@@ -22,6 +22,7 @@ export const SkeletonNoteView = (): JSX.Element => {
       alignItems="flex-start"
       gap="0.5rem"
       alignSelf="stretch"
+      boxShadow="sm"
     >
       <Box display="flex" width="17.5rem" alignItems="flex-start">
         <Stack width="16rem" alignItems="flex-start" gap="0.5rem">
