@@ -131,27 +131,35 @@ const LandingPage = () => {
               </Text>
               <Stack gap="2rem">
                 <Stack gap="0.5rem">
-                  <Text textStyle="h5">1. Login with your Singpass</Text>
+                  <Text textStyle="h5" color="base.content.strong">
+                    1. Login with your Singpass
+                  </Text>
                   <Text textStyle="body-1">
                     Start using eNotes with your secured Singpass account
                   </Text>
                 </Stack>
                 <Stack gap="0.5rem">
-                  <Text textStyle="h5">2. Select your note recipients</Text>
+                  <Text textStyle="h5" color="base.content.strong">
+                    2. Select your note recipients
+                  </Text>
                   <Text textStyle="body-1">
                     Quickly choose from a list of family members or nominate a
                     recipient using his or NRIC number
                   </Text>
                 </Stack>
                 <Stack gap="0.5rem">
-                  <Text textStyle="h5">3. Write your message</Text>
+                  <Text textStyle="h5" color="base.content.strong">
+                    3. Write your message
+                  </Text>
                   <Text textStyle="body-1">
                     Write down any essential information, instructions or
                     parting messages quickly
                   </Text>
                 </Stack>
                 <Stack gap="0.5rem">
-                  <Text textStyle="h5">4. Select a time of delivery</Text>
+                  <Text textStyle="h5" color="base.content.strong">
+                    4. Select a time of delivery
+                  </Text>
                   <Text textStyle="body-1">
                     Choose the timing for delivering your message to your loved
                     ones: either immediately or upon your passing
