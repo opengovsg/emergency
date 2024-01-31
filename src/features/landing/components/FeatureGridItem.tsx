@@ -15,7 +15,7 @@ export const FeatureGridItem = ({
   description2,
 }: FeatureGridItemProps): JSX.Element => {
   return (
-    <Card gap="2rem" p="2rem" alignItems="flex-start">
+    <Card gap="2rem" p="2rem" alignItems="flex-start" boxShadow="sm">
       <Flex gap="0.5rem" alignItems="center">
         {icon && (
           <Icon
