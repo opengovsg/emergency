@@ -32,7 +32,7 @@ const LandingPage = () => {
     <>
       <Box bgGradient="linear(78deg, #FFF0FD 4.62%, #FAFBFC 89.25%)">
         <AppNavbar />
-        <LandingSection p="4.5rem 9.25rem 6 rem 9.25rem">
+        <LandingSection>
           <Stack
             direction={{ base: 'column', lg: 'row' }}
             align="center"
@@ -61,7 +61,7 @@ const LandingPage = () => {
                   delivered when they are most needed.
                 </SectionBodyText>
               </Stack>
-              <Box mt="2.5rem">
+              <Box>
                 <SignInContextProvider>
                   <SgidLoginButton />
                 </SignInContextProvider>

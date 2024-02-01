@@ -1,7 +1,7 @@
 import { Image, Stack, Text } from '@chakra-ui/react'
 export const EmptyMyNoteList = () => {
   return (
-    <Stack p="1rem">
+    <Stack>
       <Image src="/assets/Empty-MyNotes.svg" alt="Empty Notes Received" />
       <Stack gap="0.25rem" justifyContent="center" alignItems="center">
         <Text textStyle="subhead-1">No notes written ... yet</Text>

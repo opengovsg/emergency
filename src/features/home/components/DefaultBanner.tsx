@@ -6,7 +6,6 @@ export const DefaultBanner = () => {
   return (
     <Flex
       px="1.5rem"
-      pt="2rem"
       justifyContent="space-between"
       alignItems="flex-end"
       alignSelf="stretch"

@@ -25,7 +25,6 @@ export const NoteHome = (): JSX.Element => {
   return (
     <Suspense fallback={<Skeleton height="100vh" />}>
       <Flex
-        padding="2rem 0rem"
         flexDirection="column"
         alignItems="center"
         gap="1.5rem"
