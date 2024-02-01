@@ -1,7 +1,7 @@
 export const SHORT_FAQ = [
   {
     text: 'What can I use eNotes for?',
-    panel: `eNotes is versatile: it's perfect for securely storing critical information like passwords, secret keys, and digital account access instructions. Additionally, it's an ideal platform for composing heartfelt parting messages to your family and friends. Whether for practical details or personal sentiments, eNotes has you covered.
+    panel: `eNotes is versatile: it's perfect for storing critical information password hints and digital account access instructions.
     
           Please note, however, that messages sent via eNotes do not serve as legal wills.`,
   },
@@ -58,7 +58,7 @@ export const ALL_FAQ = [
   },
   {
     text: 'What can I use eNotes for?',
-    panel: `eNotes is versatile: it's perfect for securely storing critical information like passwords, secret keys, and digital account access instructions. Additionally, it's an ideal platform for composing heartfelt parting messages to your family and friends. Whether for practical details or personal sentiments, eNotes has you covered.
+    panel: `eNotes is versatile: it's perfect for storing critical information password hints and digital account access instructions.
 
       Please note, however, that messages sent via eNotes do not serve as legal wills.`,
   },
